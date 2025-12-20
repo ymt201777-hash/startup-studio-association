@@ -1,4 +1,2 @@
-import { createTRPCReact } from "@trpc/react-query";
-import type { AppRouter } from "../../../server/routers";
-
-export const trpc = createTRPCReact<AppRouter>();
+// tRPC は静的サイト版では使用しません
+// このファイルは互換性のため残されています
