@@ -113,12 +113,12 @@ const App = () => {
           <div className="hidden md:flex items-center space-x-8">
             {['Database', 'Studios', 'Reports'].map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-bold hover:text-blue-600 transition-colors">
-                {item === 'Database' ? 'アーカイブ' : 
+                {item === 'Database' ? 'スタートアップ一覧' : 
                  item === 'Studios' ? 'スタジオ一覧' : 'レポート'}
               </a>
             ))}
             <a href="#database" className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20">
-              データベースを見る
+              スタートアップを探す
             </a>
           </div>
 
@@ -298,9 +298,9 @@ const App = () => {
             <div>
               <h4 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-6">Contents</h4>
               <ul className="space-y-4 text-sm font-bold text-slate-600">
-                <li><a href="#database" className="hover:text-blue-600 transition-colors">スタートアップ・データベース</a></li>
-                <li><a href="#studios" className="hover:text-blue-600 transition-colors">加盟スタジオ一覧</a></li>
-                <li><a href="#reports" className="hover:text-blue-600 transition-colors">調査レポート・資料室</a></li>
+                <li><a href="#database" className="hover:text-blue-600 transition-colors">スタートアップ一覧</a></li>
+                <li><a href="#studios" className="hover:text-blue-600 transition-colors">スタジオ一覧</a></li>
+                <li><a href="#reports" className="hover:text-blue-600 transition-colors">レポート・資料室</a></li>
               </ul>
             </div>
             <div>
