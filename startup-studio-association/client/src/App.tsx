@@ -96,7 +96,7 @@ const App = () => {
     );
   };
 
-  const Carousel = ({ title, icon: Icon, items, renderItem, onSeeAll }) => {
+  const Carousel = ({ titleNode, items, renderItem, onSeeAll }) => {
     const scrollRef = useRef(null);
     const scroll = (direction) => {
       if (scrollRef.current) {
@@ -108,12 +108,8 @@ const App = () => {
 
     return (
       <div className="py-12 sm:py-16 md:py-20 lg:py-24">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-10 gap-4">
-          <div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black flex items-center gap-3 text-white tracking-tight">
-              <div className="p-2 bg-blue-500/20 rounded-lg"><Icon className="text-blue-400" size={24} /></div> {title}
-            </h2>
-          </div>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-10 gap-6">
+          {titleNode}
           <div className="flex items-center gap-4 w-full sm:w-auto justify-between">
             <button onClick={() => onSeeAll()} className="text-[10px] md:text-xs font-black text-gray-400 hover:text-white flex items-center gap-1 group transition-all tracking-widest uppercase">
               VIEW ALL <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -164,7 +160,6 @@ const App = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-[#0a0a0f]/95 backdrop-blur-3xl border-b border-white/5 p-6 flex flex-col gap-6 animate-in slide-in-from-top duration-300">
             <button onClick={() => {setViewMode('startups'); setIsMobileMenuOpen(false)}} className="text-xs font-black uppercase tracking-widest text-left text-gray-400 border-b border-white/5 pb-2">Startups</button>
@@ -233,9 +228,19 @@ const App = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20 relative">
             <div className="absolute top-[20%] right-[-10%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-red-500/5 blur-[100px] rounded-full pointer-events-none"></div>
             
+            {/* 1. Featured Studios */}
             <Carousel 
-              title="Featured Studios" 
-              icon={Rocket} 
+              titleNode={
+                <div>
+                  <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+                    <Rocket size={12} /> 注目のスタジオ
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none">
+                    FEATURED<br/>
+                    <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">STUDIOS</span>
+                  </h2>
+                </div>
+              }
               items={featuredStudios}
               onSeeAll={() => setViewMode('studios')}
               renderItem={(studio) => (
@@ -256,9 +261,19 @@ const App = () => {
               )}
             />
 
+            {/* 2. Startup Archive */}
             <Carousel 
-              title="Startup Archive" 
-              icon={Database} 
+              titleNode={
+                <div>
+                  <p className="text-[10px] font-black text-purple-400 uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+                    <Database size={12} /> スタートアップ一覧
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none">
+                    STARTUP<br/>
+                    <span className="bg-gradient-to-r from-purple-400 to-red-400 bg-clip-text text-transparent">ARCHIVE</span>
+                  </h2>
+                </div>
+              }
               items={startups}
               onSeeAll={() => setViewMode('startups')}
               renderItem={(startup) => (
@@ -277,12 +292,18 @@ const App = () => {
               )}
             />
 
-            {/* 3.1 Reports Section */}
+            {/* 3. Reports & Insights */}
             <div className="py-12 md:py-24">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-12">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black flex items-center gap-4 text-white">
-                  <div className="p-2 bg-red-500/20 rounded-lg"><FileText className="text-red-400" size={24} /></div> Reports & Insights
-                </h2>
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-12">
+                <div>
+                  <p className="text-[10px] font-black text-red-400 uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+                    <FileText size={12} /> レポート・インサイト
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none">
+                    REPORTS &<br/>
+                    <span className="bg-gradient-to-r from-red-400 to-yellow-400 bg-clip-text text-transparent">INSIGHTS</span>
+                  </h2>
+                </div>
                 <a href="#" className="text-[10px] md:text-xs font-bold text-gray-400 hover:text-white flex items-center gap-1 group transition-all tracking-[0.1em] uppercase">
                   VIEW REPORTS <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -307,14 +328,20 @@ const App = () => {
               </div>
             </div>
 
-            {/* 3.2 Member Directory Section */}
+            {/* 4. Member Directory */}
             <div className="py-12 md:py-24 border-t border-white/5 mt-6 md:mt-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 md:mb-12 text-center md:text-left">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black flex items-center justify-center md:justify-start gap-4 text-white">
-                  <div className="p-2 bg-yellow-500/20 rounded-lg"><Users className="text-yellow-400" size={24} /></div> Member Directory
-                </h2>
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-12">
+                <div>
+                  <p className="text-[10px] font-black text-yellow-400 uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+                    <Users size={12} /> 加盟スタジオ
+                  </p>
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none">
+                    MEMBER<br/>
+                    <span className="bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">DIRECTORY</span>
+                  </h2>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-6 md:gap-12 justify-center opacity-40 hover:opacity-100 transition-all duration-700">
+              <div className="flex flex-wrap gap-6 md:gap-12 justify-center md:justify-start opacity-40 hover:opacity-100 transition-all duration-700">
                 {featuredStudios.map((studio, idx) => (
                   <div key={idx} className="flex items-center gap-2 md:gap-3 grayscale hover:grayscale-0 transition-all">
                     <div className="w-8 h-8 md:w-12 md:h-12 bg-white/5 rounded-lg md:rounded-xl flex items-center justify-center font-black text-white text-[10px] md:text-xs border border-white/10">{studio.name.charAt(0)}</div>
@@ -329,11 +356,14 @@ const App = () => {
 
       {viewMode === 'studios' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
+          {/* 5. Studio Directory Title */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-10 mb-12 md:mb-20">
             <div>
-              <Tag color="blue">DATABASE</Tag>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mt-4 mb-4 text-white tracking-tighter">Studio Directory</h2>
-              <p className="text-gray-400 font-medium text-sm sm:text-lg max-w-xl">加盟スタートアップスタジオの強みと実績を検索</p>
+              <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-2">スタジオ一覧</p>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
+                STUDIO<br/>
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">DIRECTORY</span>
+              </h2>
             </div>
             <div className="flex flex-wrap gap-2 md:gap-3">
               {['すべて', '独立系', '大企業系', 'VC系', '大学系', '自治体連携'].map(t => (
@@ -383,10 +413,12 @@ const App = () => {
       {viewMode === 'startups' && (
         <div className="bg-[#0a0a0f] min-h-screen text-white pt-32 sm:pt-40 pb-20 md:pb-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            {/* 6. Startup Archive Title (Search Page) */}
             <div className="mb-12 md:mb-20">
-              <Tag color="red">ARCHIVE</Tag>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mt-4 mb-8 sm:mb-10 flex items-center gap-6 tracking-tighter">
-                Startup Archive
+              <p className="text-[10px] font-black text-purple-400 uppercase tracking-[0.4em] mb-2">スタートアップ一覧</p>
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-10">
+                STARTUP<br/>
+                <span className="bg-gradient-to-r from-purple-400 to-red-400 bg-clip-text text-transparent">ARCHIVE</span>
               </h2>
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 bg-white/5 p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-white/10 backdrop-blur-3xl shadow-2xl">
                 <div className="flex-1 space-y-4 md:space-y-5">
@@ -461,14 +493,12 @@ const App = () => {
         </div>
       </footer>
 
-      {/* Custom Styles for Spline-like feel */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animations */
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
