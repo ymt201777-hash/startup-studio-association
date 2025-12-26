@@ -78,13 +78,13 @@ const App = () => {
   const Tag = ({ children, color = "blue" }) => {
     const colors = {
       blue: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-      green: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      red: "bg-red-500/10 text-red-400 border-red-500/20",
       purple: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+      yellow: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
       orange: "bg-orange-500/10 text-orange-400 border-orange-500/20",
-      pink: "bg-pink-500/10 text-pink-400 border-pink-500/20",
     };
     return (
-      <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${colors[color] || colors.blue}`}>
+      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${colors[color] || colors.blue} tracking-wider`}>
         {children}
       </span>
     );
@@ -101,29 +101,29 @@ const App = () => {
     };
 
     return (
-      <div className="py-16">
-        <div className="flex justify-between items-end mb-8">
+      <div className="py-20">
+        <div className="flex justify-between items-end mb-10">
           <div>
-            <h2 className="text-2xl font-black flex items-center gap-3">
-              <Icon className="text-blue-500" /> {title}
+            <h2 className="text-3xl font-black flex items-center gap-3 text-white tracking-tight">
+              <div className="p-2 bg-blue-500/20 rounded-lg"><Icon className="text-blue-400" size={24} /></div> {title}
             </h2>
           </div>
           <div className="flex items-center gap-4">
-            <button onClick={() => onSeeAll()} className="text-sm font-bold text-blue-500 hover:text-blue-400 flex items-center gap-1 group transition-all">
-              すべて見る <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <button onClick={() => onSeeAll()} className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1 group transition-all tracking-widest">
+              VIEW ALL <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <div className="hidden md:flex gap-2">
-              <button onClick={() => scroll('left')} className="p-2 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors"><ChevronLeft size={20} /></button>
-              <button onClick={() => scroll('right')} className="p-2 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors"><ChevronRight size={20} /></button>
+            <div className="hidden md:flex gap-3">
+              <button onClick={() => scroll('left')} className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-white"><ChevronLeft size={20} /></button>
+              <button onClick={() => scroll('right')} className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-white"><ChevronRight size={20} /></button>
             </div>
           </div>
         </div>
         <div 
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-2 px-2"
+          className="flex gap-8 overflow-x-auto no-scrollbar pb-6 -mx-4 px-4"
         >
           {items.map((item, idx) => (
-            <div key={idx} className="min-w-[280px] md:min-w-[320px] transition-transform hover:-translate-y-1">
+            <div key={idx} className="min-w-[300px] md:min-w-[360px] transition-all hover:-translate-y-2 duration-500">
               {renderItem(item)}
             </div>
           ))}
@@ -133,64 +133,76 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-100">
+    <div className="min-h-screen bg-[#0a0a0f] text-gray-200 font-sans selection:bg-blue-500/30 tracking-tight">
       {/* 1. Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || viewMode !== 'top' ? 'bg-white/95 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || viewMode !== 'top' ? 'bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-8'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setViewMode('top')}>
-            <img src={logoUrl} alt="Logo" className="h-10 md:h-12 w-auto object-contain" />
-            <span className="hidden lg:block font-black text-xl tracking-tighter text-blue-600 uppercase">Startup Studio Association</span>
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setViewMode('top')}>
+            <div className="p-1 bg-white rounded-lg group-hover:rotate-12 transition-transform duration-500">
+              <img src={logoUrl} alt="Logo" className="h-8 md:h-10 w-auto object-contain" />
+            </div>
+            <span className="hidden lg:block font-black text-xl tracking-tighter text-white uppercase group-hover:text-blue-400 transition-colors">Startup Studio Association</span>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => setViewMode('startups')} className={`text-sm font-bold transition-colors ${viewMode === 'startups' ? 'text-blue-600' : 'hover:text-blue-600'}`}>スタートアップ一覧</button>
-            <button onClick={() => setViewMode('studios')} className={`text-sm font-bold transition-colors ${viewMode === 'studios' ? 'text-blue-600' : 'hover:text-blue-600'}`}>スタジオ一覧</button>
-            <a href="#" className="text-sm font-bold hover:text-blue-600">レポート</a>
-            <button onClick={() => setViewMode('startups')} className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all shadow-md shadow-blue-500/20">
-              スタートアップを探す
+          <div className="hidden md:flex items-center space-x-10">
+            <button onClick={() => setViewMode('startups')} className={`text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'startups' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Startups</button>
+            <button onClick={() => setViewMode('studios')} className={`text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'studios' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Studios</button>
+            <a href="#" className="text-xs font-black tracking-[0.2em] uppercase text-gray-400 hover:text-white transition-colors">Reports</a>
+            <button onClick={() => setViewMode('startups')} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-blue-500/20 border border-white/10">
+              Find Ventures
             </button>
           </div>
-          <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}><Menu /></button>
+          <button className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}><Menu /></button>
         </div>
       </nav>
 
       {viewMode === 'top' && (
         <>
           {/* 2. Hero Section */}
-          <section className="relative pt-32 pb-24 md:pt-48 md:pb-40 bg-[#111827] text-white overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="max-w-3xl">
-                <h1 className="text-4xl md:text-7xl font-black mb-8 leading-[1.15] tracking-tight">
-                  スタートアップスタジオの<br /><span className="text-blue-400">すべてがここに集まる</span>
+          <section className="relative pt-48 pb-32 md:pt-64 md:pb-52 overflow-hidden">
+            {/* Animated Background Gradients */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+            
+            <div className="max-w-7xl mx-auto px-6 relative z-10 text-center md:text-left">
+              <div className="max-w-4xl mx-auto md:mx-0">
+                <Tag color="purple">NEXT GENERATION ECOSYSTEM</Tag>
+                <h1 className="text-5xl md:text-8xl font-black mt-8 mb-10 leading-[1.05] tracking-tight text-white">
+                  スタートアップスタジオの<br />
+                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">すべてがここに集まる</span>
                 </h1>
-                <p className="text-lg md:text-xl text-gray-300 mb-12 leading-relaxed font-medium">業界の「今」を知るための、唯一無二の情報ハブ。</p>
-                <div className="flex flex-wrap gap-4">
-                  <button onClick={() => setViewMode('startups')} className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/30">
-                    データベースを見る <ArrowRight size={20} />
+                <p className="text-xl md:text-2xl text-gray-400 mb-14 leading-relaxed font-medium max-w-2xl tracking-wide">
+                  業界の「今」を知るための、唯一無二の情報ハブ。
+                </p>
+                <div className="flex flex-wrap justify-center md:justify-start gap-6">
+                  <button onClick={() => setViewMode('startups')} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3 border border-white/10 uppercase tracking-wider">
+                    Explore Database <ArrowRight size={22} />
+                  </button>
+                  <button onClick={() => setViewMode('studios')} className="bg-white/5 backdrop-blur-lg text-white border border-white/10 px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all uppercase tracking-wider">
+                    Member Studios
                   </button>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* 2.1 Stats Section (New Integrated) */}
-          <section className="bg-slate-50 border-b border-slate-200">
-            <div className="max-w-7xl mx-auto px-6 py-12">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* 2.1 Stats Section */}
+          <section className="relative z-10 -mt-10 px-6">
+            <div className="max-w-7xl mx-auto bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-10 md:p-16">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
                 {[
-                  { label: "国内スタジオ数", value: "30+", unit: "社", icon: Building2 },
-                  { label: "輩出スタートアップ数", value: "150+", unit: "社", icon: Rocket },
-                  { label: "累計調達額", value: "450+", unit: "億円", icon: DollarSign },
-                  { label: "Exit実績", value: "24", unit: "件", icon: Trophy },
+                  { label: "Studios", value: "30+", unit: "社", icon: Building2, color: "text-blue-400" },
+                  { label: "Ventures", value: "150+", unit: "社", icon: Rocket, color: "text-purple-400" },
+                  { label: "Funding", value: "450+", unit: "億円", icon: DollarSign, color: "text-yellow-400" },
+                  { label: "Exits", value: "24", unit: "件", icon: Trophy, color: "text-red-400" },
                 ].map((stat, idx) => (
-                  <div key={idx} className="flex flex-col items-center md:items-start">
-                    <div className="flex items-center gap-2 mb-2">
-                      <stat.icon size={16} className="text-blue-500" />
-                      <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</span>
+                  <div key={idx} className="flex flex-col items-center md:items-start group">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className={`p-1.5 rounded-md bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}><stat.icon size={14} /></div>
+                      <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">{stat.label}</span>
                     </div>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-black text-slate-900">{stat.value}</span>
-                      <span className="text-sm font-bold text-slate-500">{stat.unit}</span>
+                      <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">{stat.value}</span>
+                      <span className="text-sm font-bold text-gray-500">{stat.unit}</span>
                     </div>
                   </div>
                 ))}
@@ -199,22 +211,26 @@ const App = () => {
           </section>
 
           {/* 3. Top Page Carousels */}
-          <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="max-w-7xl mx-auto px-6 py-20 relative">
+            <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-red-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+            
             <Carousel 
               title="Featured Studios" 
               icon={Rocket} 
               items={featuredStudios}
               onSeeAll={() => setViewMode('studios')}
               renderItem={(studio) => (
-                <div className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer h-full flex flex-col group">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center font-black text-blue-600 border border-slate-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">{studio.name.charAt(0)}</div>
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-[2rem] hover:border-blue-500/50 hover:bg-white/[0.08] transition-all cursor-pointer h-full flex flex-col group relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="flex justify-between items-start mb-8">
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-500">{studio.name.charAt(0)}</div>
                     <Tag color="blue">{studio.type}</Tag>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 line-clamp-1">{studio.name}</h3>
-                  <div className="flex gap-4 mt-auto pt-4 border-t border-slate-50">
-                    <div><p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Startups</p><p className="font-black text-blue-600">{studio.startupCount}</p></div>
-                    <div><p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Exits</p><p className="font-black text-emerald-500">{studio.exitCount}</p></div>
+                  <h3 className="font-black text-xl mb-3 text-white group-hover:text-blue-400 transition-colors line-clamp-1 tracking-tight">{studio.name}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-8 line-clamp-2">{studio.description}</p>
+                  <div className="flex gap-8 mt-auto pt-6 border-t border-white/5">
+                    <div><p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Startups</p><p className="font-black text-white text-lg">{studio.startupCount}</p></div>
+                    <div><p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Exits</p><p className="font-black text-emerald-400 text-lg">{studio.exitCount}</p></div>
                   </div>
                 </div>
               )}
@@ -226,44 +242,44 @@ const App = () => {
               items={startups}
               onSeeAll={() => setViewMode('startups')}
               renderItem={(startup) => (
-                <div className="bg-slate-900 text-white p-6 rounded-2xl hover:bg-slate-800 transition-all cursor-pointer h-full flex flex-col border border-white/5">
-                  <div className="flex justify-between items-start mb-4">
+                <div className="bg-[#1a1a24] border border-white/5 p-8 rounded-[2rem] hover:border-purple-500/50 hover:bg-[#1e1e2d] transition-all cursor-pointer h-full flex flex-col group shadow-xl">
+                  <div className="flex justify-between items-start mb-8">
                     <Tag color="purple">{startup.industry}</Tag>
-                    <Tag color="orange">{startup.stage.split('（')[0]}</Tag>
+                    <Tag color="yellow">{startup.stage.split('（')[0]}</Tag>
                   </div>
-                  <h3 className="font-bold text-lg mb-1">{startup.name}</h3>
-                  <p className="text-xs text-gray-500 font-bold">from {startup.studio}</p>
-                  <div className="mt-6 flex items-center justify-between text-[10px] font-black uppercase text-gray-400">
-                    <span className="flex items-center gap-1"><DollarSign size={10} /> {startup.funding}</span>
-                    <ExternalLink size={14} />
+                  <h3 className="font-black text-2xl mb-2 text-white group-hover:text-purple-400 transition-colors tracking-tight">{startup.name}</h3>
+                  <p className="text-xs text-gray-500 font-black uppercase tracking-widest">from {startup.studio}</p>
+                  <div className="mt-10 flex items-center justify-between text-xs font-black uppercase text-gray-400 pt-6 border-t border-white/5">
+                    <span className="flex items-center gap-2 text-blue-400 font-black tracking-widest"><DollarSign size={14} className="text-blue-500" /> {startup.funding}</span>
+                    <div className="p-2 bg-white/5 rounded-full group-hover:bg-purple-500/20 transition-colors"><ExternalLink size={16} /></div>
                   </div>
                 </div>
               )}
             />
 
-            {/* 3.1 Reports Section (Restored) */}
-            <div className="py-16">
-              <div className="flex justify-between items-end mb-8">
-                <h2 className="text-2xl font-black flex items-center gap-3">
-                  <FileText className="text-blue-500" /> Reports & Insights
+            {/* 3.1 Reports Section */}
+            <div className="py-24">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                <h2 className="text-3xl font-black flex items-center gap-4 text-white">
+                  <div className="p-2 bg-red-500/20 rounded-lg"><FileText className="text-red-400" size={24} /></div> Reports & Insights
                 </h2>
-                <a href="#" className="text-sm font-bold text-blue-500 hover:text-blue-400 flex items-center gap-1 group">
-                  レポート一覧 <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                <a href="#" className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1 group transition-all tracking-[0.1em]">
+                  VIEW REPORTS <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {reports.map((report, idx) => (
-                  <div key={idx} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-blue-500 hover:bg-white hover:shadow-lg transition-all cursor-pointer flex flex-col group">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="px-2 py-1 bg-white rounded text-[10px] font-black text-slate-400 border border-slate-100 uppercase">{report.type}</span>
-                      <span className="text-[10px] font-bold text-slate-400">{report.date}</span>
+                  <div key={idx} className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 hover:border-red-500/30 hover:bg-white/[0.06] hover:shadow-2xl hover:shadow-red-500/5 transition-all cursor-pointer flex flex-col group">
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-black text-gray-400 border border-white/10 uppercase tracking-widest">{report.type}</span>
+                      <span className="text-[10px] font-bold text-gray-500 tracking-widest uppercase">{report.date}</span>
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-6 flex-grow">{report.title}</h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold text-slate-400">{report.size}</span>
-                      <div className="flex items-center gap-2 text-blue-600 group-hover:gap-3 transition-all">
-                        <span className="text-xs font-black">Download</span>
-                        <Download size={16} />
+                    <h3 className="font-black text-lg text-white mb-8 flex-grow leading-snug tracking-tight">{report.title}</h3>
+                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{report.size}</span>
+                      <div className="flex items-center gap-2 text-red-400 group-hover:gap-4 transition-all">
+                        <span className="text-xs font-black uppercase tracking-widest">Download</span>
+                        <div className="p-2 bg-red-500/10 rounded-lg"><Download size={18} /></div>
                       </div>
                     </div>
                   </div>
@@ -271,21 +287,18 @@ const App = () => {
               </div>
             </div>
 
-            {/* 3.2 Member Directory Section (Restored) */}
-            <div className="py-16 border-t border-slate-100 mt-8">
-              <div className="flex justify-between items-end mb-8">
-                <h2 className="text-2xl font-black flex items-center gap-3">
-                  <Users className="text-blue-500" /> Member Directory
+            {/* 3.2 Member Directory Section */}
+            <div className="py-24 border-t border-white/5 mt-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 text-center md:text-left">
+                <h2 className="text-3xl font-black flex items-center justify-center md:justify-start gap-4 text-white">
+                  <div className="p-2 bg-yellow-500/20 rounded-lg"><Users className="text-yellow-400" size={24} /></div> Member Directory
                 </h2>
-                <button onClick={() => setViewMode('studios')} className="text-sm font-bold text-blue-500 hover:text-blue-400 flex items-center gap-1 group">
-                  加盟スタジオ一覧 <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </button>
               </div>
-              <div className="flex flex-wrap gap-4 md:gap-8 justify-center md:justify-start opacity-60">
+              <div className="flex flex-wrap gap-6 md:gap-12 justify-center opacity-40 hover:opacity-100 transition-opacity duration-700">
                 {featuredStudios.concat(featuredStudios).map((studio, idx) => (
-                  <div key={idx} className="flex items-center gap-3 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-100 rounded-lg flex items-center justify-center font-black text-slate-400 text-xs border border-slate-200">{studio.name.charAt(0)}</div>
-                    <span className="text-xs font-bold text-slate-600 hidden md:inline">{studio.name.split(' ')[0]}</span>
+                  <div key={idx} className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all cursor-default">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center font-black text-white text-xs border border-white/10 group-hover:bg-white/10">{studio.name.charAt(0)}</div>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] hidden md:inline">{studio.name.split(' ')[0]}</span>
                   </div>
                 ))}
               </div>
@@ -295,18 +308,19 @@ const App = () => {
       )}
 
       {viewMode === 'studios' && (
-        <div className="max-w-7xl mx-auto px-6 pt-32 pb-24">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div className="max-w-7xl mx-auto px-6 pt-40 pb-32">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
             <div>
-              <h2 className="text-4xl font-black mb-2 tracking-tight">Studio Directory</h2>
-              <p className="text-slate-500 font-medium tracking-tight">加盟スタジオの詳細情報と実績一覧</p>
+              <Tag color="blue">DATABASE</Tag>
+              <h2 className="text-5xl font-black mt-4 mb-4 text-white tracking-tighter">Studio Directory</h2>
+              <p className="text-gray-400 font-medium text-lg max-w-xl">加盟スタートアップスタジオの強みと実績を検索</p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {['すべて', '独立系', '大企業系', 'VC系', '大学系', '自治体連携'].map(t => (
                 <button 
                   key={t}
                   onClick={() => setStudioTypeFilter(t)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold border transition-all ${studioTypeFilter === t ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+                  className={`px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all ${studioTypeFilter === t ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}
                 >
                   {t}
                 </button>
@@ -314,32 +328,32 @@ const App = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredStudios.map(studio => (
-              <div key={studio.id} className="group bg-white border border-slate-200 rounded-3xl p-8 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/5 transition-all">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center font-black text-blue-600 text-2xl border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all">{studio.name.charAt(0)}</div>
+              <div key={studio.id} className="group bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 hover:border-blue-500/50 hover:bg-white/[0.06] hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 flex flex-col">
+                <div className="flex justify-between items-start mb-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-2xl flex items-center justify-center font-black text-blue-400 text-2xl border border-blue-500/20 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-inner">{studio.name.charAt(0)}</div>
                   <div className="flex flex-col items-end gap-2">
                     <Tag color="blue">{studio.type}</Tag>
                     <Tag color="purple">{studio.category}</Tag>
                   </div>
                 </div>
-                <h3 className="text-2xl font-black mb-4 group-hover:text-blue-600 transition-colors">{studio.name}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-8 line-clamp-3">{studio.description}</p>
+                <h3 className="text-2xl font-black mb-4 text-white group-hover:text-blue-400 transition-colors tracking-tight">{studio.name}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-3">{studio.description}</p>
                 
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <p className="text-[10px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1 tracking-widest"><TrendingUp size={12}/> Startups</p>
-                    <p className="text-xl font-black text-slate-900">{studio.startupCount}</p>
+                <div className="grid grid-cols-2 gap-4 mb-10 mt-auto">
+                  <div className="bg-white/5 p-5 rounded-3xl border border-white/5 group-hover:bg-white/10 transition-colors">
+                    <p className="text-[10px] font-black text-gray-500 uppercase mb-2 flex items-center gap-1 tracking-[0.2em]"><TrendingUp size={12} className="text-blue-400"/> Startups</p>
+                    <p className="text-2xl font-black text-white">{studio.startupCount}</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <p className="text-[10px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1 tracking-widest"><Trophy size={12}/> Exit実績</p>
-                    <p className="text-xl font-black text-emerald-600">{studio.exitCount}</p>
+                  <div className="bg-white/5 p-5 rounded-3xl border border-white/5 group-hover:bg-white/10 transition-colors">
+                    <p className="text-[10px] font-black text-gray-500 uppercase mb-2 flex items-center gap-1 tracking-[0.2em]"><Trophy size={12} className="text-red-400"/> Exits</p>
+                    <p className="text-2xl font-black text-emerald-400">{studio.exitCount}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
-                  <MapPin size={14} /> {studio.location}
+                <div className="flex items-center gap-2 text-gray-500 text-xs font-black uppercase tracking-widest">
+                  <MapPin size={14} className="text-blue-500" /> {studio.location}
                 </div>
               </div>
             ))}
@@ -348,50 +362,51 @@ const App = () => {
       )}
 
       {viewMode === 'startups' && (
-        <div className="bg-slate-900 min-h-screen text-white pt-32 pb-24">
+        <div className="bg-[#0a0a0f] min-h-screen text-white pt-40 pb-32">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-12">
-              <h2 className="text-4xl font-black mb-4 flex items-center gap-4">
-                <Database className="text-blue-400" size={40} /> Startup Archive
+            <div className="mb-20">
+              <Tag color="red">ARCHIVE</Tag>
+              <h2 className="text-5xl font-black mt-4 mb-10 flex items-center gap-6 tracking-tighter">
+                Startup Archive
               </h2>
-              <div className="flex flex-wrap gap-8 bg-white/5 p-6 rounded-2xl border border-white/10">
-                <div className="space-y-3">
-                  <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">領域別フィルタ</p>
-                  <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col md:flex-row gap-12 bg-white/5 p-10 rounded-[2.5rem] border border-white/10 backdrop-blur-3xl shadow-2xl">
+                <div className="flex-1 space-y-5">
+                  <p className="text-[11px] font-black text-gray-500 uppercase tracking-[0.3em]">Industry Filter</p>
+                  <div className="flex flex-wrap gap-3">
                     {['すべて', 'SaaS', 'ヘルスケア', 'Fintech', 'AI', 'その他'].map(i => (
-                      <button key={i} onClick={() => setStartupIndustryFilter(i)} className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${startupIndustryFilter === i ? 'bg-blue-600 border-blue-600' : 'border-white/20 text-gray-400 hover:border-white/40'}`}>{i}</button>
+                      <button key={i} onClick={() => setStartupIndustryFilter(i)} className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${startupIndustryFilter === i ? 'bg-purple-600 border-purple-600 text-white' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}>{i}</button>
                     ))}
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">ステージ別フィルタ</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="flex-1 space-y-5">
+                  <p className="text-[11px] font-black text-gray-500 uppercase tracking-[0.3em]">Stage Filter</p>
+                  <div className="flex flex-wrap gap-3">
                     {['すべて', 'シード', 'シリーズA', 'シリーズB以降', 'Exit済（IPO / M&A）'].map(s => (
-                      <button key={s} onClick={() => setStartupStageFilter(s)} className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${startupStageFilter === s ? 'bg-orange-600 border-orange-600' : 'border-white/20 text-gray-400 hover:border-white/40'}`}>{s.split('（')[0]}</button>
+                      <button key={s} onClick={() => setStartupStageFilter(s)} className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${startupStageFilter === s ? 'bg-orange-600 border-orange-600 text-white' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}>{s.split('（')[0]}</button>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {filteredStartups.map(startup => (
-                <div key={startup.id} className="bg-white/5 border border-white/10 p-8 rounded-[2rem] hover:bg-white/[0.08] transition-all group">
-                  <div className="flex justify-between items-start mb-6">
+                <div key={startup.id} className="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/[0.08] transition-all group hover:-translate-y-2 duration-500 shadow-xl">
+                  <div className="flex justify-between items-start mb-8">
                     <Tag color="purple">{startup.industry}</Tag>
-                    <Tag color="orange">{startup.stage}</Tag>
+                    <Tag color="yellow">{startup.stage}</Tag>
                   </div>
-                  <h3 className="text-2xl font-black mb-1 group-hover:text-blue-400 transition-colors">{startup.name}</h3>
-                  <p className="text-blue-500 text-sm font-bold mb-8 uppercase tracking-tight">from {startup.studio}</p>
+                  <h3 className="text-3xl font-black mb-2 group-hover:text-purple-400 transition-colors tracking-tight">{startup.name}</h3>
+                  <p className="text-blue-400 text-xs font-black uppercase tracking-[0.2em] mb-10">from {startup.studio}</p>
                   
-                  <div className="space-y-4 border-t border-white/5 pt-6">
+                  <div className="space-y-6 border-t border-white/5 pt-8">
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-500 font-bold flex items-center gap-2 tracking-tight"><DollarSign size={16}/> 累計調達額</span>
-                      <span className="font-black text-blue-400">{startup.funding}</span>
+                      <span className="text-gray-500 font-black uppercase tracking-widest flex items-center gap-2"><DollarSign size={16} className="text-yellow-400"/> Funding</span>
+                      <span className="font-black text-white text-lg">{startup.funding}</span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-500 font-bold flex items-center gap-2 tracking-tight"><Trophy size={16}/> Exit状況</span>
-                      <span className={`font-black ${startup.exitStatus !== '未' ? 'text-emerald-400' : 'text-gray-600'}`}>{startup.exitStatus}</span>
+                      <span className="text-gray-500 font-black uppercase tracking-widest flex items-center gap-2"><Trophy size={16} className="text-red-400"/> Exit Status</span>
+                      <span className={`font-black uppercase tracking-widest text-xs px-3 py-1 rounded-full ${startup.exitStatus !== '未' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-gray-600'}`}>{startup.exitStatus}</span>
                     </div>
                   </div>
                 </div>
@@ -402,24 +417,36 @@ const App = () => {
       )}
 
       {/* Footer */}
-      <footer className="py-20 border-t border-slate-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="max-w-sm text-center md:text-left">
-              <img src={logoUrl} alt="Logo" className="h-10 mb-6 mx-auto md:mx-0" />
-              <p className="text-slate-500 text-sm font-medium leading-relaxed">一般社団法人スタートアップスタジオ協会は、業界の情報を集約し、挑戦を加速させるプラットフォームです。</p>
+      <footer className="py-24 border-t border-white/5 bg-[#08080c] relative overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-blue-500/5 blur-[100px] rounded-full"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+            <div className="max-w-sm">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-1 bg-white rounded-lg"><img src={logoUrl} alt="Logo" className="h-8" /></div>
+                <span className="font-black text-white uppercase tracking-tighter text-xl">Startup Studio Association</span>
+              </div>
+              <p className="text-gray-500 text-sm font-medium leading-relaxed tracking-wide">業界の情報を集約し、次世代の挑戦を加速させる。<br />日本最大のスタートアップスタジオ・プラットフォーム。</p>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">
-              <a href="#" className="hover:text-blue-600 transition-colors underline decoration-slate-200 underline-offset-4">Privacy Policy</a>
-              <a href="#" className="hover:text-blue-600 transition-colors underline decoration-slate-200 underline-offset-4">Terms of Use</a>
-              <a href="#" className="hover:text-blue-600 transition-colors underline decoration-slate-200 underline-offset-4">Contact</a>
+            <div className="flex flex-wrap gap-8 md:gap-16 text-[11px] font-black uppercase tracking-[0.3em] text-gray-500">
+              <a href="#" className="hover:text-blue-400 transition-colors border-b border-transparent hover:border-blue-400 pb-1">Privacy Policy</a>
+              <a href="#" className="hover:text-red-400 transition-colors border-b border-transparent hover:border-red-400 pb-1">Terms of Use</a>
+              <a href="#" className="hover:text-yellow-400 transition-colors border-b border-transparent hover:border-yellow-400 pb-1">Contact</a>
             </div>
           </div>
-          <div className="pt-8 mt-12 border-t border-slate-50 text-center">
-            <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">© 2025 STARTUP STUDIO ASSOCIATION</p>
+          <div className="pt-12 mt-20 border-t border-white/5 text-center">
+            <p className="text-[10px] font-black text-gray-600 uppercase tracking-[0.5em]">© 2025 STARTUP STUDIO ASSOCIATION / ALL RIGHTS RESERVED.</p>
           </div>
         </div>
       </footer>
+
+      {/* Custom Styles for Spline-like feel */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}} />
     </div>
   );
 };
