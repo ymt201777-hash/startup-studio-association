@@ -623,54 +623,98 @@ const App = () => {
 
       {viewMode === 'top' && (
         <>
-          {/* Hero Section - 更新されたメッセージ */}
-          <section className="relative pt-32 sm:pt-40 md:pt-48 lg:pt-64 pb-20 sm:pb-28 md:pb-32 lg:pb-52 overflow-hidden">
+          {/* Hero Section - バン！バン！デザイン */}
+          <section className="relative pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-20 md:pb-28 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] md:h-[600px] bg-blue-500/10 blur-[80px] md:blur-[120px] rounded-full pointer-events-none"></div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center md:text-left">
-              <div className="max-w-4xl mx-auto md:mx-0">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+              {/* Tag */}
+              <div className="text-center mb-6 md:mb-8">
                 <Tag color="green">DATA-DRIVEN INSIGHTS</Tag>
-                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mt-6 md:mt-8 mb-8 md:mb-10 leading-[1.1] md:leading-[1.05] tracking-tighter text-white">
-                  シリーズA到達まで<br />
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">55%短縮</span>
-                </h1>
-                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-10 md:mb-14 leading-relaxed font-medium max-w-2xl tracking-wide">
-                  スタジオ発スタートアップは25.2ヶ月でシリーズAに到達。<br className="hidden md:block" />
-                  従来型VC支援（56ヶ月）と比較して約2.5年の短縮。
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 md:gap-6">
-                  <button onClick={() => {setViewMode('comparison'); window.scrollTo(0,0)}} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-sm md:text-lg hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] hover:-translate-y-1 transition-all flex items-center justify-center gap-3 border border-white/10 uppercase tracking-wider">
-                    View Data <BarChart3 size={20} />
-                  </button>
-                  <button onClick={() => {setViewMode('studios'); window.scrollTo(0,0)}} className="bg-white/5 backdrop-blur-lg text-white border border-white/10 px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-sm md:text-lg hover:bg-white/10 transition-all uppercase tracking-wider">
-                    Member Studios
-                  </button>
+              </div>
+              
+              {/* Main Headline */}
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center mb-4 md:mb-6 leading-tight tracking-tighter text-white">
+                スタートアップスタジオの<br />
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">
+                  圧倒的スピード
+                </span>
+              </h1>
+              
+              <p className="text-gray-400 text-center text-sm sm:text-lg md:text-xl mb-10 md:mb-14 max-w-2xl mx-auto">
+                データが証明する、スタジオモデルの優位性
+              </p>
+
+              {/* ★ メインの4つ横並び Stats - バン！バン！ */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-10 md:mb-14">
+                {/* 1. Series A到達 */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/5 rounded-2xl md:rounded-3xl blur-xl group-hover:blur-2xl transition-all"></div>
+                  <div className="relative bg-[#12121a] border border-blue-500/30 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:border-blue-400/50 transition-all hover:-translate-y-1">
+                    <div className="flex items-baseline justify-center gap-1 mb-2 md:mb-3">
+                      <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">24</span>
+                      <span className="text-lg sm:text-xl md:text-2xl font-bold text-blue-400">ヶ月</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-gray-300 mb-2">Series A到達</p>
+                    <span className="inline-block px-2 sm:px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-[10px] sm:text-xs font-black">
+                      VC比 55%短縮
+                    </span>
+                  </div>
+                </div>
+
+                {/* 2. 成功率 */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-green-600/5 rounded-2xl md:rounded-3xl blur-xl group-hover:blur-2xl transition-all"></div>
+                  <div className="relative bg-[#12121a] border border-green-500/30 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:border-green-400/50 transition-all hover:-translate-y-1">
+                    <div className="flex items-baseline justify-center gap-1 mb-2 md:mb-3">
+                      <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">72</span>
+                      <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-400">%</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-gray-300 mb-2">成功率</p>
+                    <span className="inline-block px-2 sm:px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-[10px] sm:text-xs font-black">
+                      Seed→Series A
+                    </span>
+                  </div>
+                </div>
+
+                {/* 3. 輩出企業 */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-600/5 rounded-2xl md:rounded-3xl blur-xl group-hover:blur-2xl transition-all"></div>
+                  <div className="relative bg-[#12121a] border border-purple-500/30 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:border-purple-400/50 transition-all hover:-translate-y-1">
+                    <div className="flex items-baseline justify-center gap-1 mb-2 md:mb-3">
+                      <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">200</span>
+                      <span className="text-lg sm:text-xl md:text-2xl font-bold text-purple-400">+社</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-gray-300 mb-2">輩出企業</p>
+                    <span className="inline-block px-2 sm:px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-[10px] sm:text-xs font-black">
+                      国内スタジオ発
+                    </span>
+                  </div>
+                </div>
+
+                {/* 4. IPO実績 */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-red-600/5 rounded-2xl md:rounded-3xl blur-xl group-hover:blur-2xl transition-all"></div>
+                  <div className="relative bg-[#12121a] border border-red-500/30 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 text-center hover:border-red-400/50 transition-all hover:-translate-y-1">
+                    <div className="flex items-baseline justify-center gap-1 mb-2 md:mb-3">
+                      <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">5</span>
+                      <span className="text-lg sm:text-xl md:text-2xl font-bold text-red-400">社</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-gray-300 mb-2">IPO実績</p>
+                    <span className="inline-block px-2 sm:px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-[10px] sm:text-xs font-black">
+                      国内スタジオ発
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
 
-          {/* Stats Section - スピード感重視の数字 */}
-          <section className="relative z-10 -mt-6 sm:-mt-10 px-4 sm:px-6">
-            <div className="max-w-7xl mx-auto bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-10 md:p-16">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12">
-                {[
-                  { label: "Series A到達", value: "24", unit: "ヶ月", icon: Clock, color: "text-blue-400", source: "VC比 55%短縮" },
-                  { label: "成功率", value: "72", unit: "%", icon: Target, color: "text-green-400", source: "Seed→Series A" },
-                  { label: "輩出企業", value: "200+", unit: "社", icon: Rocket, color: "text-purple-400", source: "国内スタジオ発" },
-                  { label: "IPO実績", value: "5", unit: "社", icon: Trophy, color: "text-red-400", source: "国内スタジオ発" },
-                ].map((stat, idx) => (
-                  <div key={idx} className="flex flex-col items-center md:items-start group">
-                    <div className="flex items-center gap-2 mb-2 sm:mb-4">
-                      <div className={`p-1 rounded-md bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}><stat.icon size={12} /></div>
-                      <span className="text-[8px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">{stat.label}</span>
-                    </div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">{stat.value}</span>
-                      <span className="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500">{stat.unit}</span>
-                    </div>
-                    <span className="text-[8px] text-gray-600 mt-1">{stat.source}</span>
-                  </div>
-                ))}
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+                <button onClick={() => {setViewMode('comparison'); window.scrollTo(0,0)}} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-sm md:text-lg hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] hover:-translate-y-1 transition-all flex items-center justify-center gap-3 border border-white/10 uppercase tracking-wider">
+                  View Data <BarChart3 size={20} />
+                </button>
+                <button onClick={() => {setViewMode('studios'); window.scrollTo(0,0)}} className="bg-white/5 backdrop-blur-lg text-white border border-white/10 px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-sm md:text-lg hover:bg-white/10 transition-all uppercase tracking-wider">
+                  Member Studios
+                </button>
               </div>
             </div>
           </section>
