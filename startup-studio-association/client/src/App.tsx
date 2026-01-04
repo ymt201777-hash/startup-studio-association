@@ -649,15 +649,15 @@ const App = () => {
             </div>
           </section>
 
-          {/* Stats Section - 更新されたデータ */}
+          {/* Stats Section - スピード感重視の数字 */}
           <section className="relative z-10 -mt-6 sm:-mt-10 px-4 sm:px-6">
             <div className="max-w-7xl mx-auto bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-10 md:p-16">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12">
                 {[
-                  { label: "国内Studios", value: "45+", unit: "社", icon: Building2, color: "text-blue-400", source: "2024年推定" },
-                  { label: "輩出Ventures", value: "200-300", unit: "社", icon: Rocket, color: "text-purple-400", source: "累計推定" },
-                  { label: "累計Funding", value: "700+", unit: "億円", icon: DollarSign, color: "text-yellow-400", source: "スタジオ発累計" },
-                  { label: "IPO Exits", value: "5+", unit: "社", icon: Trophy, color: "text-red-400", source: "Gaiax実績" },
+                  { label: "Series A到達", value: "24", unit: "ヶ月", icon: Clock, color: "text-blue-400", source: "VC比 55%短縮" },
+                  { label: "成功率", value: "72", unit: "%", icon: Target, color: "text-green-400", source: "Seed→Series A" },
+                  { label: "輩出企業", value: "200+", unit: "社", icon: Rocket, color: "text-purple-400", source: "国内スタジオ発" },
+                  { label: "IPO実績", value: "5", unit: "社", icon: Trophy, color: "text-red-400", source: "国内スタジオ発" },
                 ].map((stat, idx) => (
                   <div key={idx} className="flex flex-col items-center md:items-start group">
                     <div className="flex items-center gap-2 mb-2 sm:mb-4">
