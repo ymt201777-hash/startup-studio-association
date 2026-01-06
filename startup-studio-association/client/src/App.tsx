@@ -624,23 +624,23 @@ const App = () => {
       {viewMode === 'top' && (
         <>
           {/* Hero Section - 8項目マトリクス */}
-          <section className="relative pt-24 sm:pt-32 md:pt-40 pb-12 sm:pb-16 md:pb-20 overflow-hidden">
+          <section className="relative pt-20 sm:pt-24 md:pt-28 pb-10 sm:pb-12 md:pb-16 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] md:h-[600px] bg-blue-500/10 blur-[80px] md:blur-[120px] rounded-full pointer-events-none"></div>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
               {/* Tag */}
-              <div className="text-center mb-4 md:mb-6">
+              <div className="text-center mb-2 md:mb-3">
                 <Tag color="green">DATA-DRIVEN INSIGHTS</Tag>
               </div>
               
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-center mb-3 md:mb-4 leading-tight tracking-tighter text-white">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-center mb-2 md:mb-3 leading-tight tracking-tighter text-white">
                 スタートアップスタジオの<br />
                 <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">
                   圧倒的スピード
                 </span>
               </h1>
               
-              <p className="text-gray-400 text-center text-sm sm:text-base md:text-lg mb-8 md:mb-10 max-w-xl mx-auto">
+              <p className="text-gray-400 text-center text-xs sm:text-sm md:text-base mb-6 md:mb-8 max-w-xl mx-auto">
                 データが証明する、スタジオモデルの優位性
               </p>
 
