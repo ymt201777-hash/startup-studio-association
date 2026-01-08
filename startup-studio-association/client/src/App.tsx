@@ -1061,7 +1061,7 @@ const App = () => {
             </div>
           </div>
 
-          /* CTA */
+          {/* CTA */}
           <div className="bg-gradient-to-br from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-8 md:p-12 text-center">
             <p className="text-xl md:text-2xl font-bold text-white mb-8">
               アイデアをお持ちの方も、支援したい方も。
