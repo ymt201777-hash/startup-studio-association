@@ -971,7 +971,7 @@ const App = () => {
             </h2>
             <div className="grid md:grid-cols-3 gap-4 md:gap-6">
               {[
-                { icon: Users, text: "スタジオ vs 事業会社という構図をなくす", color: "blue" },
+                { icon: Users, text: "会社内では会社事情でボツになったアイデアが実は画期的なものかも！", color: "blue" },
                 { icon: Zap, text: "「シーズを持つ人」と「支援したい人」のフラットなマッチング", color: "purple" },
                 { icon: Target, text: "効率的に多くの出会いを生むマッチング型イベント", color: "orange" },
               ].map((item, idx) => (
@@ -1078,34 +1078,7 @@ const App = () => {
             </div>
           </div>
 
-          {/* 集客方法 */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
-            <h2 className="text-xl md:text-2xl font-black text-white mb-4 flex items-center gap-3">
-              <div className="w-1 h-6 bg-red-500 rounded-full"></div>
-              集客方法
-            </h2>
-            <p className="text-gray-400 mb-8">大企業の社員発信有志団体を通じてアプローチ</p>
-            
-            <h3 className="font-black text-gray-300 mb-4 text-sm uppercase tracking-widest">主なアプローチ先候補</h3>
-            <div className="grid md:grid-cols-2 gap-3">
-              {recruitmentOrgs.map((org, idx) => (
-                <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center font-black text-red-400">
-                    {org.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-bold text-white text-sm">{org.name}</p>
-                    <p className="text-gray-500 text-xs">{org.description}</p>
-                  </div>
-                </div>
-              ))}
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-center">
-                <p className="text-gray-500 text-sm">などなど...</p>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA */}
+          /* CTA */
           <div className="bg-gradient-to-br from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-8 md:p-12 text-center">
             <h3 className="text-2xl md:text-3xl font-black text-white mb-4">参加に興味がありますか？</h3>
             <p className="text-gray-400 mb-8 max-w-xl mx-auto">
