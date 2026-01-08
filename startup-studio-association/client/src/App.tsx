@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronRight, ChevronLeft, Rocket, ExternalLink, ArrowRight, Database, FileText, Search, MapPin, Building2, Filter, TrendingUp, Trophy, DollarSign, Download, Users, BarChart3, Target, Clock, Percent, ClipboardList, Calendar, Zap, UserCheck, Mail } from 'lucide-react';
 
@@ -526,7 +527,7 @@ const App = () => {
 
   // イベント形式
   const eventFormat = [
-    { label: "形式", value: "オンライン（Zoom等）" },
+    { label: "形式", value: "オンライン（Zoom）" },
     { label: "1ミーティング", value: "20〜30分" },
     { label: "1人あたり", value: "5〜6枠程度" }
   ];
@@ -1022,57 +1023,40 @@ const App = () => {
             </div>
           </div>
 
-          {/* 運営フロー */}
+          {/* エントリーの流れ */}
           <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
             <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
               <div className="w-1 h-6 bg-yellow-500 rounded-full"></div>
-              運営フロー
+              エントリーの流れ
             </h2>
             
-            {/* 事前 */}
-            <div className="mb-8">
-              <h3 className="font-black text-orange-400 mb-4 flex items-center gap-2">
-                <Calendar size={18} /> 事前（2〜3週間前）
-              </h3>
-              <div className="space-y-3 pl-6 border-l-2 border-orange-500/30">
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">1</span>
-                  <div>
-                    <p className="text-white font-bold">Googleフォームでエントリー受付</p>
-                    <ul className="text-gray-400 text-sm mt-1 space-y-1">
-                      <li>• シーズ側：アイデア概要、求める支援、関わり方希望</li>
-                      <li>• 支援側：興味領域、提供できる支援</li>
-                    </ul>
-                  </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Step 1 */}
+              <div className="relative">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
+                  <div className="w-10 h-10 rounded-full bg-orange-500/20 text-orange-400 font-black flex items-center justify-center mb-4">1</div>
+                  <h3 className="font-black text-white mb-2">エントリー</h3>
+                  <p className="text-gray-400 text-sm">フォームからアイデア概要や求める支援内容を登録</p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">2</span>
-                  <p className="text-white font-bold">スプレッドシートで一覧化 → 運営が手動でマッチング</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">3</span>
-                  <p className="text-white font-bold">双方に確認 → マッチング確定</p>
-                </div>
+                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600">→</div>
               </div>
-            </div>
 
-            {/* 当日 */}
-            <div>
-              <h3 className="font-black text-blue-400 mb-4 flex items-center gap-2">
-                <Zap size={18} /> 当日
-              </h3>
-              <div className="space-y-3 pl-6 border-l-2 border-blue-500/30">
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">1</span>
-                  <p className="text-white font-bold">参加者にミーティングURL一斉送信</p>
+              {/* Step 2 */}
+              <div className="relative">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
+                  <div className="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 font-black flex items-center justify-center mb-4">2</div>
+                  <h3 className="font-black text-white mb-2">マッチング通知</h3>
+                  <p className="text-gray-400 text-sm">マッチング結果とミーティング相手をメールでお知らせ</p>
                 </div>
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">2</span>
-                  <p className="text-white font-bold">タイムテーブルに沿って20〜30分のミーティングを回転</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">3</span>
-                  <p className="text-white font-bold">1人あたり5〜6枠のミーティングを実施</p>
+                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600">→</div>
+              </div>
+
+              {/* Step 3 */}
+              <div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
+                  <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-400 font-black flex items-center justify-center mb-4">3</div>
+                  <h3 className="font-black text-white mb-2">当日ミーティング</h3>
+                  <p className="text-gray-400 text-sm">Zoomで20〜30分のミーティングを5〜6枠実施</p>
                 </div>
               </div>
             </div>
