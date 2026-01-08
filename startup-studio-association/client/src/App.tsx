@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ChevronRight, ChevronLeft, Rocket, ExternalLink, ArrowRight, Database, FileText, Search, MapPin, Building2, Filter, TrendingUp, Trophy, DollarSign, Download, Users, BarChart3, Target, Clock, Percent, ClipboardList } from 'lucide-react';
+import { Menu, X, ChevronRight, ChevronLeft, Rocket, ExternalLink, ArrowRight, Database, FileText, Search, MapPin, Building2, Filter, TrendingUp, Trophy, DollarSign, Download, Users, BarChart3, Target, Clock, Percent, ClipboardList, Calendar, Zap, UserCheck, Mail } from 'lucide-react';
 
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [viewMode, setViewMode] = useState('top'); // 'top', 'studios', 'startups', 'studioDetail', 'startupDetail', 'comparison', 'hearing'
+  const [viewMode, setViewMode] = useState('top'); // 'top', 'studios', 'startups', 'studioDetail', 'startupDetail', 'comparison', 'hearing', 'event'
   const [selectedStudio, setSelectedStudio] = useState(null);
   const [selectedStartup, setSelectedStartup] = useState(null);
 
@@ -518,6 +518,27 @@ const App = () => {
     { title: "スタジオ発スタートアップ 成功率分析", date: "2024.11", type: "分析レポート", size: "PDF" },
   ];
 
+  // イベント参加者タイプ
+  const eventParticipants = [
+    { type: "シーズ側", description: "アイデアを持つ個人（事業会社社員、起業志望者など）" },
+    { type: "支援側", description: "VC、スタートアップスタジオ、エンジェル投資家など" }
+  ];
+
+  // イベント形式
+  const eventFormat = [
+    { label: "形式", value: "オンライン（Zoom等）" },
+    { label: "1ミーティング", value: "20〜30分" },
+    { label: "1人あたり", value: "5〜6枠程度" }
+  ];
+
+  // 集客先団体
+  const recruitmentOrgs = [
+    { name: "ONE JAPAN", description: "55社3,000名、大企業有志団体の連合体" },
+    { name: "One Panasonic", description: "約3,000人、ONE JAPANの母体" },
+    { name: "O-DEN（NTT）", description: "グループ横断の若手ネットワーク" },
+    { name: "Intrastar", description: "1,000名以上、社内起業家コミュニティ" },
+  ];
+
   const filteredStudios = featuredStudios.filter(s => studioTypeFilter === 'すべて' || s.type === studioTypeFilter);
   const filteredStartups = startups.filter(s => 
     (startupIndustryFilter === 'すべて' || s.industry === startupIndustryFilter) &&
@@ -599,7 +620,7 @@ const App = () => {
             <button onClick={() => {setViewMode('comparison'); window.scrollTo(0,0)}} className={`text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'comparison' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Data</button>
             <button onClick={() => {setViewMode('startups'); window.scrollTo(0,0)}} className={`text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'startups' || viewMode === 'startupDetail' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Startups</button>
             <button onClick={() => {setViewMode('studios'); window.scrollTo(0,0)}} className={`text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'studios' || viewMode === 'studioDetail' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Studios</button>
-            <button onClick={() => {setViewMode('hearing'); window.scrollTo(0,0)}} className={`text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'hearing' ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`}>Hearing</button>
+            <button onClick={() => {setViewMode('event'); window.scrollTo(0,0)}} className={`text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase transition-colors ${viewMode === 'event' ? 'text-orange-400' : 'text-gray-400 hover:text-white'}`}>Event</button>
             <button onClick={() => {setViewMode('startups'); window.scrollTo(0,0)}} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 lg:px-6 py-2 rounded-full text-[10px] lg:text-xs font-black uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-blue-500/20 border border-white/10">
               Find Ventures
             </button>
@@ -615,7 +636,7 @@ const App = () => {
             <button onClick={() => {setViewMode('comparison'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="text-xs font-black uppercase tracking-widest text-left text-gray-400 border-b border-white/5 pb-2">Data</button>
             <button onClick={() => {setViewMode('startups'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="text-xs font-black uppercase tracking-widest text-left text-gray-400 border-b border-white/5 pb-2">Startups</button>
             <button onClick={() => {setViewMode('studios'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="text-xs font-black uppercase tracking-widest text-left text-gray-400 border-b border-white/5 pb-2">Studios</button>
-            <button onClick={() => {setViewMode('hearing'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="text-xs font-black uppercase tracking-widest text-left text-gray-400 border-b border-white/5 pb-2">Hearing</button>
+            <button onClick={() => {setViewMode('event'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="text-xs font-black uppercase tracking-widest text-left text-orange-400 border-b border-white/5 pb-2">Event</button>
             <button onClick={() => {setViewMode('startups'); setIsMobileMenuOpen(false); window.scrollTo(0,0)}} className="bg-blue-600 text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest text-center">Find Ventures</button>
           </div>
         )}
@@ -740,6 +761,35 @@ const App = () => {
           </section>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20 relative">
+            {/* Event Banner */}
+            <div className="mb-12 md:mb-20">
+              <div 
+                onClick={() => {setViewMode('event'); window.scrollTo(0,0)}}
+                className="bg-gradient-to-r from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-6 md:p-10 cursor-pointer hover:border-orange-400/50 transition-all group"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Tag color="orange">NEW EVENT</Tag>
+                      <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Coming Soon</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight group-hover:text-orange-400 transition-colors">
+                      シーズマッチングイベント
+                    </h3>
+                    <p className="text-gray-400 text-sm md:text-base">
+                      アイデアを持つ個人と、投資・伴走したいVC/スタジオをマッチング
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-black text-orange-400 uppercase tracking-widest">詳細を見る</span>
+                    <div className="p-3 rounded-full bg-orange-500/20 group-hover:bg-orange-500/30 transition-colors">
+                      <ArrowRight size={20} className="text-orange-400" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Quick Comparison Preview */}
             <div className="py-12 md:py-20">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-12">
@@ -884,7 +934,191 @@ const App = () => {
         </>
       )}
 
-      {/* Comparison / Data View - 新規追加 */}
+      {/* Event Page - 新規追加 */}
+      {viewMode === 'event' && (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
+          {/* Hero */}
+          <div className="text-center mb-12 md:mb-20">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <Tag color="orange">MATCHING EVENT</Tag>
+              <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">IVSイベント参考</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-4">
+              シーズ<br/>
+              <span className="bg-gradient-to-r from-orange-400 via-red-400 to-purple-400 bg-clip-text text-transparent">マッチングイベント</span>
+            </h1>
+            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+              〜 アイデアと支援者をつなぐ 〜
+            </p>
+          </div>
+
+          {/* 概要 */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-6 flex items-center gap-3">
+              <div className="w-1 h-6 bg-orange-500 rounded-full"></div>
+              イベント概要
+            </h2>
+            <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+              アイデア/シーズを持つ個人と、投資・事業伴走したいVC/スタートアップスタジオをマッチングするオンラインイベント。事前にマッチングを行い、当日は短時間ミーティングを集中的に実施します。
+            </p>
+          </div>
+
+          {/* コンセプト */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
+              <div className="w-1 h-6 bg-purple-500 rounded-full"></div>
+              コンセプト
+            </h2>
+            <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+              {[
+                { icon: Users, text: "スタジオ vs 事業会社という構図をなくす", color: "blue" },
+                { icon: Zap, text: "「シーズを持つ人」と「支援したい人」のフラットなマッチング", color: "purple" },
+                { icon: Target, text: "効率的に多くの出会いを生むマッチング型イベント", color: "orange" },
+              ].map((item, idx) => (
+                <div key={idx} className={`bg-${item.color}-500/10 border border-${item.color}-500/20 rounded-xl p-6 text-center`}>
+                  <div className={`w-12 h-12 mx-auto mb-4 rounded-xl bg-${item.color}-500/20 flex items-center justify-center`}>
+                    <item.icon size={24} className={`text-${item.color}-400`} />
+                  </div>
+                  <p className="text-gray-300 text-sm font-medium">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 参加者 */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
+              <div className="w-1 h-6 bg-green-500 rounded-full"></div>
+              参加者
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {eventParticipants.map((p, idx) => (
+                <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2 rounded-lg ${idx === 0 ? 'bg-blue-500/20' : 'bg-green-500/20'}`}>
+                      <UserCheck size={20} className={idx === 0 ? 'text-blue-400' : 'text-green-400'} />
+                    </div>
+                    <h3 className="font-black text-white text-lg">{p.type}</h3>
+                  </div>
+                  <p className="text-gray-400 text-sm">{p.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 開催形式 */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
+              <div className="w-1 h-6 bg-blue-500 rounded-full"></div>
+              開催形式
+            </h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {eventFormat.map((item, idx) => (
+                <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-6 text-center">
+                  <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">{item.label}</p>
+                  <p className="text-xl md:text-2xl font-black text-white">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 運営フロー */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
+              <div className="w-1 h-6 bg-yellow-500 rounded-full"></div>
+              運営フロー
+            </h2>
+            
+            {/* 事前 */}
+            <div className="mb-8">
+              <h3 className="font-black text-orange-400 mb-4 flex items-center gap-2">
+                <Calendar size={18} /> 事前（2〜3週間前）
+              </h3>
+              <div className="space-y-3 pl-6 border-l-2 border-orange-500/30">
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">1</span>
+                  <div>
+                    <p className="text-white font-bold">Googleフォームでエントリー受付</p>
+                    <ul className="text-gray-400 text-sm mt-1 space-y-1">
+                      <li>• シーズ側：アイデア概要、求める支援、関わり方希望</li>
+                      <li>• 支援側：興味領域、提供できる支援</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">2</span>
+                  <p className="text-white font-bold">スプレッドシートで一覧化 → 運営が手動でマッチング</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-xs font-black flex items-center justify-center flex-shrink-0">3</span>
+                  <p className="text-white font-bold">双方に確認 → マッチング確定</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 当日 */}
+            <div>
+              <h3 className="font-black text-blue-400 mb-4 flex items-center gap-2">
+                <Zap size={18} /> 当日
+              </h3>
+              <div className="space-y-3 pl-6 border-l-2 border-blue-500/30">
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">1</span>
+                  <p className="text-white font-bold">参加者にミーティングURL一斉送信</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">2</span>
+                  <p className="text-white font-bold">タイムテーブルに沿って20〜30分のミーティングを回転</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center flex-shrink-0">3</span>
+                  <p className="text-white font-bold">1人あたり5〜6枠のミーティングを実施</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 集客方法 */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
+            <h2 className="text-xl md:text-2xl font-black text-white mb-4 flex items-center gap-3">
+              <div className="w-1 h-6 bg-red-500 rounded-full"></div>
+              集客方法
+            </h2>
+            <p className="text-gray-400 mb-8">大企業の社員発信有志団体を通じてアプローチ</p>
+            
+            <h3 className="font-black text-gray-300 mb-4 text-sm uppercase tracking-widest">主なアプローチ先候補</h3>
+            <div className="grid md:grid-cols-2 gap-3">
+              {recruitmentOrgs.map((org, idx) => (
+                <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center font-black text-red-400">
+                    {org.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-bold text-white text-sm">{org.name}</p>
+                    <p className="text-gray-500 text-xs">{org.description}</p>
+                  </div>
+                </div>
+              ))}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-center">
+                <p className="text-gray-500 text-sm">などなど...</p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-gradient-to-br from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-8 md:p-12 text-center">
+            <h3 className="text-2xl md:text-3xl font-black text-white mb-4">参加に興味がありますか？</h3>
+            <p className="text-gray-400 mb-8 max-w-xl mx-auto">
+              イベントの詳細が決まり次第、こちらでお知らせします。
+            </p>
+            <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-xl font-black text-sm uppercase tracking-widest hover:shadow-[0_0_40px_rgba(249,115,22,0.3)] hover:-translate-y-1 transition-all inline-flex items-center gap-2">
+              <Mail size={18} /> 通知を受け取る
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Comparison / Data View */}
       {viewMode === 'comparison' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
           <div className="mb-12 md:mb-20">
@@ -1025,7 +1259,7 @@ const App = () => {
         </div>
       )}
 
-      {/* Hearing Items Page - 新規追加 */}
+      {/* Hearing Items Page */}
       {viewMode === 'hearing' && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
           <div className="mb-12 md:mb-16">
