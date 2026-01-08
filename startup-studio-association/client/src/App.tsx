@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronRight, ChevronLeft, Rocket, ExternalLink, ArrowRight, Database, FileText, Search, MapPin, Building2, Filter, TrendingUp, Trophy, DollarSign, Download, Users, BarChart3, Target, Clock, Percent, ClipboardList, Calendar, Zap, UserCheck, Mail } from 'lucide-react';
 
@@ -1064,12 +1063,11 @@ const App = () => {
 
           /* CTA */
           <div className="bg-gradient-to-br from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-8 md:p-12 text-center">
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-4">参加に興味がありますか？</h3>
-            <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-              イベントの詳細が決まり次第、こちらでお知らせします。
+            <p className="text-xl md:text-2xl font-bold text-white mb-8">
+              アイデアをお持ちの方も、支援したい方も。
             </p>
             <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-xl font-black text-sm uppercase tracking-widest hover:shadow-[0_0_40px_rgba(249,115,22,0.3)] hover:-translate-y-1 transition-all inline-flex items-center gap-2">
-              <Mail size={18} /> 通知を受け取る
+              <ArrowRight size={18} /> エントリーはこちらから
             </button>
           </div>
         </div>
