@@ -4,17 +4,13 @@ import { Menu, X, ChevronRight, ChevronLeft, Rocket, ExternalLink, ArrowRight, D
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [viewMode, setViewMode] = useState('top'); // 'top', 'studios', 'startups', 'studioDetail', 'startupDetail', 'comparison', 'hearing', 'event'
+  const [viewMode, setViewMode] = useState('top');
   const [selectedStudio, setSelectedStudio] = useState(null);
   const [selectedStartup, setSelectedStartup] = useState(null);
-
-  // --- Filter States ---
   const [studioTypeFilter, setStudioTypeFilter] = useState('すべて');
   const [startupIndustryFilter, setStartupIndustryFilter] = useState('すべて');
   const [startupStageFilter, setStartupStageFilter] = useState('すべて');
-
-  // --- Comparison View States ---
-  const [comparisonRegion, setComparisonRegion] = useState('global'); // 'global' or 'japan'
+  const [comparisonRegion, setComparisonRegion] = useState('global');
   const [timelineRegion, setTimelineRegion] = useState('global');
 
   const logoUrl = "/logo.png";
@@ -24,15 +20,12 @@ const App = () => {
     meta.name = "viewport";
     meta.content = "width=device-width, initial-scale=1.0";
     document.getElementsByTagName('head')[0].appendChild(meta);
-
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ============================================
-  // 比較データ（リサーチ結果）
-  // ============================================
+  // 比較データ
   const comparisonDataGlobal = [
     { label: "シリーズA到達期間", studio: "25.2ヶ月", vc: "56ヶ月", diff: "55%短縮", source: "GSSN 2022" },
     { label: "Seed→Series A成功率", studio: "72%", vc: "42%", diff: "+30pt", source: "GSSN調査" },
@@ -47,7 +40,6 @@ const App = () => {
     { label: "シリーズA成功率", studio: "約72%", vc: "約48%", diff: "+30%", source: "みんなのスタートアップスタジオ" },
   ];
 
-  // 時系列データ
   const timelineDataGlobal = [
     { year: 2015, studios: 65, label: "黎明期" },
     { year: 2017, studios: 150, label: "" },
@@ -67,7 +59,6 @@ const App = () => {
     { year: 2024, studios: 45, label: "TIB STUDIO" }
   ];
 
-  // ヒアリング項目
   const hearingItems = [
     { category: "基本情報", items: ["スタジオ名", "設立年月", "注力領域"] },
     { category: "支援スタートアップごと", items: [
@@ -78,277 +69,277 @@ const App = () => {
     { category: "集計用", items: ["累計支援スタートアップ数", "うちシリーズA到達数", "うちExit数"] }
   ];
 
-  // --- Extended Data（リサーチ結果を反映） ---
+  // ★ 19スタジオのデータ（Excelから反映）
   const featuredStudios = [
     { 
       id: 1, 
-      name: "Gaiax STARTUP STUDIO", 
+      name: "Gaiax スタートアップスタジオ", 
       location: "東京都千代田区", 
       type: "独立系",
-      category: "ソーシャル・Web3", 
-      startupCount: 70, 
-      exitCount: 5,
-      description: "日本最大級のスタートアップスタジオ。タイミー、Photosynth、TRUSTDOCK等を輩出。IPO5社達成。",
-      founded: "2015年",
-      fullDescription: "ガイアックスは「人と人をつなげる」をミッションに、シェアリングエコノミーやDAO、Web3領域で次世代の社会構造を作る起業家を支援しています。70社以上を投資・育成し、タイミー（2024年IPO、時価総額約1,760億円）、Photosynth（2021年IPO）、adish（2020年IPO）、PIXTA（2015年IPO）、AppBank（2015年IPO）の5社がIPOを達成。TRUSTDOCK、ADDressなど成長企業も多数輩出。ファウンダーの8割が学生〜新卒3年目の若手起業家です。",
+      category: "シェアリングエコノミー、web3", 
+      startupCount: 40, 
+      exitCount: 4,
+      description: "スタートアップスタジオ協会設立。シェアリングエコノミー・web3領域に強み。",
+      founded: "2015年頃",
+      fullDescription: "ガイアックスは「人と人をつなげる」をミッションに、シェアリングエコノミーやDAO、Web3領域で次世代の社会構造を作る起業家を支援しています。約40社に出資し、4社がIPOを達成。スタートアップスタジオ協会を設立し、日本のスタジオエコシステムの発展を牽引しています。",
       website: "https://gaiax-startup-studio.com/",
-      logoUrl: "/logos/gaiax.png"
+      contact: "佐々木喜徳"
     },
     { 
       id: 2, 
-      name: "quantum", 
-      location: "東京都港区", 
-      type: "大企業系",
-      category: "クリエイティブ・全領域", 
-      startupCount: 100, 
-      exitCount: 0,
-      description: "博報堂グループのクリエイティビティを軸に新規事業を連続創出。アジア初のGSSN加盟スタジオ。",
-      founded: "2016年",
-      fullDescription: "QUANTUMは博報堂の100%子会社として、クリエイティビティと実装力を武器に新規事業を連続創出するスタートアップスタジオです。ヘルスケア、モビリティ、D2Cなど全領域で75-100社超との事業開発実績があり、2019年にアジア初のGSSN（Global Startup Studio Network）加盟スタジオとなりました。walkey（朝日インテックJV）、WOTA（水循環技術）などを輩出。2024年には東京工業大学「Tokyo Tech Startup Studio」構築支援も開始。",
-      website: "https://www.quantum.ne.jp/",
-      logoUrl: "/logos/quantum.png"
-    },
-    { 
-      id: 3, 
-      name: "Sun Asterisk", 
-      location: "東京都千代田区", 
-      type: "独立系",
-      category: "DX・プロダクト開発", 
-      startupCount: 600, 
-      exitCount: 0,
-      description: "1,500名規模のエンジニア・デザイナー集団。600社以上の支援実績、東証プライム上場。",
-      founded: "2019年（スタジオ本格開始）",
-      fullDescription: "Sun Asteriskは、1,500名規模のエンジニア・デザイナー集団を擁するスタートアップスタジオです。600社以上の支援実績、850以上のプロダクト開発実績を持ち、ZENKIGEN（HARUTAKA）、グロービス学び放題、マネーフォワードなどを支援。2020年に東証プライム上場を果たし、2024年12月期売上高は約136億円。ベトナム中心に4カ国展開。",
-      website: "https://sun-asterisk.com/",
-      logoUrl: "/logos/sunasterisk.png"
-    },
-    { 
-      id: 4, 
       name: "デライト・ベンチャーズ", 
       location: "東京都渋谷区", 
       type: "VC系",
-      category: "シード・アーリー", 
+      category: "全般", 
       startupCount: 14, 
       exitCount: 0,
-      description: "DeNA発のVC+ベンチャービルダー。ファンド総額265億円、VC62社+VB14社以上の実績。",
-      founded: "2019年",
-      fullDescription: "デライト・ベンチャーズは、DeNA創業者の南場智子氏が設立した独立系VC。投資事業（62社+）とベンチャービルダー事業（14社+）を両輪で展開し、ファンド総額265億円を運用。本業を継続しながら起業準備ができる環境を提供し、immediaなどを輩出。「ユニコーン輩出VC」を目指しています。",
-      website: "https://www.delight-ventures.com/",
-      logoUrl: "/logos/delight.png"
+      description: "DeNA出資独立系VC。VC投資とベンチャービルダー事業の両輪で展開。",
+      founded: "2019年9月",
+      fullDescription: "デライト・ベンチャーズは、DeNA創業者の南場智子氏が設立した独立系VC。投資事業とベンチャービルダー事業を両輪で展開し、14社以上のスタートアップを輩出。本業を継続しながら起業準備ができる環境を提供しています。",
+      website: "https://delight-ventures.com/",
+      contact: "永井"
     },
     { 
-      id: 5, 
+      id: 3, 
       name: "Studio ENTRE", 
       location: "東京都渋谷区", 
       type: "独立系",
       category: "エンターテインメント", 
-      startupCount: 3, 
+      startupCount: 0, 
       exitCount: 0,
-      description: "エンタメ業界特化のバーティカル型スタジオ。400名超コミュニティ運営、TOKYO SUTEAM採択。",
+      description: "エンターテインメント業界特化のバーティカル型スタジオ。ミクシィ連携。",
       founded: "2020年",
-      fullDescription: "Studio ENTREは、エンターテインメント業界（音楽、映像、出版、ファッション）に特化したバーティカル型スタートアップスタジオです。400名超のコミュニティを運営し、最大500万円/半年以内の仮説検証を提供。FAVER（ライブ配信）、.mura（音楽NFT）、muvicaなどを輩出。2024年にはTOKYO SUTEAM協定事業者採択、神戸市インキュベーション事業採択。",
+      fullDescription: "Studio ENTREは、エンターテインメント業界（音楽、映像、出版、ファッション）に特化したバーティカル型スタートアップスタジオです。ミクシィエンターテインメントファンドと連携し、エンタメ領域の起業家を支援しています。",
       website: "https://entre.studio/",
-      logoUrl: "/logos/entre.png"
+      contact: "中村"
+    },
+    { 
+      id: 4, 
+      name: "みらいスタジオ", 
+      location: "東京都", 
+      type: "大学系",
+      category: "ディープテック", 
+      startupCount: 0, 
+      exitCount: 0,
+      description: "東工大関連VC系。高専人材を強みにディープテック領域を支援。",
+      founded: "2022年5月",
+      fullDescription: "みらいスタジオは、東京工業大学関連VCのみらい創造機構からカーブアウトしたスタートアップスタジオです。高専キャリア研究所を子会社化し、高専生・OB/OGのエンジニアコミュニティを強みにディープテック領域の起業支援を行っています。",
+      website: "https://miraistudio.co.jp/",
+      contact: "兼城駿一郎"
+    },
+    { 
+      id: 5, 
+      name: "quantum", 
+      location: "東京都港区", 
+      type: "大企業系",
+      category: "全般", 
+      startupCount: 100, 
+      exitCount: 0,
+      description: "博報堂グループ。GSSN加盟。100社超との事業開発実績。",
+      founded: "2016年4月",
+      fullDescription: "QUANTUMは博報堂グループのスタートアップスタジオです。2019年にアジア初のGSSN（Global Startup Studio Network）加盟スタジオとなりました。100社超との事業開発実績があり、年間40件のプロジェクトを稼働させています。",
+      website: "https://quantum.ne.jp/",
+      contact: "川下和彦"
     },
     { 
       id: 6, 
-      name: "STUDIO ZERO", 
-      location: "東京都品川区", 
-      type: "大企業系",
-      category: "大企業共創・DX", 
+      name: "combo", 
+      location: "東京都渋谷区", 
+      type: "独立系",
+      category: "全般", 
       startupCount: 0, 
       exitCount: 0,
-      description: "東証グロース上場のPlaidが運営。大企業・行政との事業共創・伴走支援に特化。",
-      founded: "2021年",
-      fullDescription: "STUDIO ZEROは、東証グロース上場の株式会社プレイドが運営するスタートアップスタジオです。KARTEで培ったCXナレッジを活用し、大企業・行政との事業共創・伴走支援に特化。.me（三井物産JV）、JTBパブリッシング、各自治体との共創実績があり、「PLAID Accel」で新規事業開発を伴走支援しています。",
-      website: "https://zero.plaid.co.jp/",
-      logoUrl: "/logos/studiozero.png"
+      description: "PARTY母体。凸版印刷・Sun Asterisk等がパートナー。",
+      founded: "2020年12月",
+      fullDescription: "comboは、クリエイティブ集団PARTYを母体とするスタートアップスタジオです。凸版印刷、Sun Asterisk、ギークピクチュアズ、ベクトル等がパートナーとして参画。TheChainMuseum等を輩出しています。",
+      website: "https://combo.jp/",
+      contact: "中村洋基"
     },
     { 
       id: 7, 
-      name: "みらい創造機構", 
-      location: "東京都港区", 
-      type: "大学系",
-      category: "ディープテック", 
-      startupCount: 44, 
-      exitCount: 3,
-      description: "東京工業大学関連VC。44社投資実績、上場3社達成。みらいスタジオをカーブアウト。",
-      founded: "2016年",
-      fullDescription: "みらい創造機構は、東京工業大学と連携したベンチャーキャピタルです。44社への投資実績があり、3社の上場を達成。2022年にはスタートアップスタジオ「みらいスタジオ」をカーブアウトし、高専生エンジニアコミュニティを強みにディープテック領域での起業前段階からの伴走支援を行っています。",
-      website: "https://miraisozo.co.jp/",
-      logoUrl: "/logos/miraisozo.png"
+      name: "ZERO1000 Ventures", 
+      location: "東京都渋谷区", 
+      type: "独立系",
+      category: "全般", 
+      startupCount: 1, 
+      exitCount: 0,
+      description: "Relicホールディングス運営。検証費用最大1,000万円提供。",
+      founded: "2023年1月",
+      fullDescription: "ZERO1000 Venturesは、Relicホールディングスが運営するスタートアップスタジオです。「ゼロから1,000の事業を創る」をコンセプトに、検証費用最大1,000万円を提供。3,000社・15,000件以上の新規事業開発支援実績を持ちます。",
+      website: "https://relic.co.jp/services/zero1000_ventures/",
+      contact: "北嶋貴朗"
     },
     { 
       id: 8, 
-      name: "NOW", 
-      location: "東京都渋谷区", 
-      type: "VC系",
-      category: "シード・アーリー", 
-      startupCount: 81, 
-      exitCount: 0,
-      description: "連続起業家・家入一真氏設立。81社以上に投資、シード・アーリー中心のマルチステージ投資。",
-      founded: "2018年",
-      fullDescription: "NOWは、連続起業家・家入一真氏が設立したシードVC兼スタートアップスタジオです。1号・2号ファンド合計で81社以上に投資（2022年2月時点）。Nulab、リチカ、食べチョク、シャトルペイなどを支援。起業家育成機能を持ち、「孤独や責任...起業家を守る場所に」というビジョンを掲げています。",
-      website: "https://now.vc/",
-      logoUrl: "/logos/now.png"
-    },
-    { 
-      id: 9, 
-      name: "XTech", 
-      location: "東京都中央区", 
-      type: "独立系",
-      category: "既存産業×テクノロジー", 
-      startupCount: 12, 
-      exitCount: 2,
-      description: "新規事業成功経験者が集結。12社以上を輩出、投資先から複数IPO達成。",
-      founded: "2018年",
-      fullDescription: "XTechは、新規事業成功経験者が集結したスタートアップスタジオです。既存産業×テクノロジー（AI、IoT、ブロックチェーン、5G）で多発的にスタートアップを創出。イークラウド、クロスマート、withwork/XTalent、Radiotalkなど12社以上を輩出し、投資先ではスペースマーケット、ベースフードなど複数社がIPOを達成しています。",
-      website: "https://xtech-corp.co.jp/",
-      logoUrl: "/logos/xtech.png"
-    },
-    { 
-      id: 10, 
-      name: "Creww Studio", 
-      location: "東京都目黒区", 
-      type: "独立系",
-      category: "オープンイノベーション", 
-      startupCount: 20, 
-      exitCount: 0,
-      description: "4,000社のオープンイノベーション支援実績を活用したスタートアップスタジオ。",
-      founded: "2018年",
-      fullDescription: "Creww Studioは、4,000社以上のオープンイノベーション支援実績を持つCrewwが運営するスタートアップスタジオです。大企業との共創ノウハウを活かし、10-20社のスタートアップを創出。スタートアップスタジオ協会の理事企業として業界発展にも貢献しています。",
-      website: "https://creww.me/",
-      logoUrl: "/logos/creww.png"
-    },
-    { 
-      id: 11, 
-      name: "Spirete", 
-      location: "東京都渋谷区", 
-      type: "独立系",
-      category: "大企業人材×研究シーズ", 
-      startupCount: 10, 
-      exitCount: 0,
-      description: "大企業人材と研究機関シーズを組み合わせたスタートアップ創出モデル。",
-      founded: "2020年",
-      fullDescription: "Spireteは、大企業人材と研究機関のシーズを組み合わせてスタートアップを創出するスタートアップスタジオです。5-10社のスタートアップを創出し、大企業の優秀な人材が起業にチャレンジできる環境を提供しています。",
-      website: "https://spirete.com/",
-      logoUrl: "/logos/spirete.png"
-    },
-    { 
-      id: 12, 
-      name: "01Booster Studio", 
-      location: "東京都千代田区", 
-      type: "独立系",
-      category: "建設・不動産", 
-      startupCount: 0, 
-      exitCount: 0,
-      description: "建設・不動産領域に特化したバーティカル型スタートアップスタジオ。",
-      founded: "2022年",
-      fullDescription: "01Booster Studioは、ゼロワンブースターが運営する建設・不動産領域に特化したバーティカル型スタートアップスタジオです。TIB STUDIO支援事業者としても参画し、業界特化の深い知見を活かしたスタートアップ創出を行っています。",
-      website: "https://01booster.co.jp/",
-      logoUrl: "/logos/01booster.png"
-    },
-    { 
-      id: 13, 
-      name: "ボーダレス・ジャパン", 
+      name: "Borderless", 
       location: "福岡県福岡市", 
       type: "独立系",
       category: "ソーシャルビジネス", 
       startupCount: 50, 
       exitCount: 0,
-      description: "「SWITCH to HOPE」をパーパスに、ソーシャルビジネスのみを創出。13ヵ国50事業以上展開。",
-      founded: "2007年",
-      fullDescription: "ボーダレス・ジャパンは、ソーシャルビジネスのみを創出するスタートアップスタジオです。「SWITCH to HOPE」をパーパスに、貧困、環境、教育、多文化共生などの社会課題解決に取り組む起業家を支援。独自の「恩送り資金」システムで13ヵ国に50以上の事業を展開しています。",
+      description: "ソーシャルビジネス専門。世界14ヵ国で50以上の事業を展開。",
+      founded: "2007年3月",
+      fullDescription: "ボーダレス・ジャパンは、ソーシャルビジネスのみを創出するスタートアップスタジオです。貧困、環境、教育などの社会課題解決に取り組む起業家を支援し、世界14ヵ国で50以上の事業を展開。2024年度売上100億円を達成しています。",
       website: "https://www.borderless-japan.com/",
-      logoUrl: "/logos/borderless.png"
+      contact: "田口一成"
+    },
+    { 
+      id: 9, 
+      name: "NEC X", 
+      location: "米国（2025年夏東京開設予定）", 
+      type: "大企業系",
+      category: "ディープテック", 
+      startupCount: 20, 
+      exitCount: 0,
+      description: "NEC技術活用。Elev X! Ignite/Boostプログラム運営。",
+      founded: "2018年7月",
+      fullDescription: "NEC Xは、NECの100%子会社としてシリコンバレーで運営されるスタートアップスタジオです。NECの先端技術と特許を活用し、20件以上の事業を創出。2025年夏には東京スタジオも開設予定です。",
+      website: "https://jpn.nec.com/innovation/necx/index.html",
+      contact: "松本眞太郎"
+    },
+    { 
+      id: 10, 
+      name: "moon creative lab", 
+      location: "米国・東京", 
+      type: "大企業系",
+      category: "全般", 
+      startupCount: 54, 
+      exitCount: 0,
+      description: "三井物産グループ。459件応募から54件を採用・育成。",
+      founded: "2018年8月",
+      fullDescription: "Moon Creative Labは、三井物産の100%子会社として運営されるベンチャースタジオです。グループ45,000人からアイデアを公募し、459件の応募から54のアイデアを採用・育成。30万USドル出資を含む支援を提供しています。",
+      website: "https://www.mooncreativelab.com/ja",
+      contact: "小野川貴"
+    },
+    { 
+      id: 11, 
+      name: "スタートアップファクトリー", 
+      location: "東京都目黒区", 
+      type: "独立系",
+      category: "toC、コンテンツ", 
+      startupCount: 0, 
+      exitCount: 0,
+      description: "放送作家鈴木おさむ氏GP。博報堂DYHD等がLP出資。",
+      founded: "2024年",
+      fullDescription: "スタートアップファクトリーは、放送作家・鈴木おさむ氏が32年間のエンタメ業界経験を基に立ち上げたVC/スタジオです。博報堂DYメディアパートナーズがLP出資し、toC向け・コンテンツ領域のスタートアップを支援しています。",
+      website: "https://startupfactory.co.jp/",
+      contact: "鈴木おさむ"
+    },
+    { 
+      id: 12, 
+      name: "Algomatic", 
+      location: "東京都中央区", 
+      type: "大企業系",
+      category: "AI", 
+      startupCount: 0, 
+      exitCount: 0,
+      description: "DMMから20億円投資。生成AI特化のスタートアップスタジオ。",
+      founded: "2023年4月",
+      fullDescription: "Algomaticは、DMM.comから20億円の投資を受けて設立された生成AI特化型スタートアップスタジオです。「AI革命で人々を幸せにする」をミッションに、シゴラクAI、にじボイス、リクルタAI等の事業を同時展開しています。",
+      website: "https://algomatic.jp/",
+      contact: "大野峻典"
+    },
+    { 
+      id: 13, 
+      name: "FoundX", 
+      location: "東京都文京区", 
+      type: "大学系",
+      category: "全般", 
+      startupCount: 0, 
+      exitCount: 0,
+      description: "東京大学運営。Non-equity無償プログラムを提供。",
+      founded: "2019年",
+      fullDescription: "FoundXは、東京大学産学協創推進本部が運営するスタートアップ支援プログラムです。東大卒業生・研究者向けに、Non-equity（株式取得なし）で無償のプログラムを提供。三菱地所と連携し、最初の1億円調達までを支援しています。",
+      website: "https://foundx.jp/",
+      contact: "馬田隆明"
     },
     { 
       id: 14, 
-      name: "NEC X", 
-      location: "米国パロアルト", 
-      type: "大企業系",
-      category: "AI・セキュリティ", 
-      startupCount: 20, 
+      name: "ON & BOARD", 
+      location: "", 
+      type: "VC系",
+      category: "全般", 
+      startupCount: 0, 
       exitCount: 0,
-      description: "NECの125年の技術力と45,000件以上の特許を活用し、シリコンバレーでスタートアップを創出。",
-      founded: "2018年",
-      fullDescription: "NEC Xは、日本電気（NEC）の100%子会社としてシリコンバレーで運営されるスタートアップスタジオです。NECの125年の技術力と45,000件以上の特許を活用し、AI、セキュリティ、顔認証などの先端技術領域で20件以上の事業を創出。2025年夏には東京スタジオも開設予定です。",
-      website: "https://www.nec-x.com/",
-      logoUrl: "/logos/necx.png"
+      description: "DI投資部門出身。Out of BOUNDSプログラム運営。",
+      founded: "2023年10月",
+      fullDescription: "ON & BOARDは、DI（ドリームインキュベータ）投資部門出身メンバーが設立したVC兼スタートアップスタジオです。創業支援プログラム「Out of BOUNDS」を運営し、3ヶ月でMVP作成から資金調達を目指します。",
+      website: "https://onboardvc.com/",
+      contact: "下平将人"
     },
     { 
       id: 15, 
-      name: "Moon Creative Lab", 
-      location: "東京都港区", 
-      type: "大企業系",
-      category: "ヘルスケア・EdTech", 
-      startupCount: 54, 
+      name: "DNX Studio", 
+      location: "東京都千代田区", 
+      type: "VC系",
+      category: "SaaS", 
+      startupCount: 1, 
       exitCount: 0,
-      description: "三井物産グループ45,000人からアイデアを公募し、54件を採用・育成。",
-      founded: "2018年",
-      fullDescription: "Moon Creative Labは、三井物産の100%子会社として運営されるベンチャースタジオです。グループ45,000人からアイデアを公募し、459件の応募から54のアイデアを採用・育成。ヘルスケア、EdTech、子育て、サステナビリティなどHuman-Centeredな領域で事業創造と人材育成を推進しています。",
-      website: "https://www.mooncreativelab.com/ja",
-      logoUrl: "/logos/moon.png"
+      description: "米Alloy Partners協働。B2B SaaS特化。最大5,000万円出資検討。",
+      founded: "2024年11月",
+      fullDescription: "DNX Studioは、DNX Venturesが米国Alloy Partners（旧High Alpha Innovation）と協働で運営するB2B SaaS特化のスタートアップスタジオです。3〜6ヶ月の短期集中プログラムで、最大5,000万円の出資を検討。第1期でダイリー株式会社を創業しています。",
+      website: "https://dnx.studio/",
+      contact: "倉林陽"
     },
     { 
       id: 16, 
       name: "POLAR SHORTCUT", 
-      location: "北海道札幌市", 
+      location: "北海道", 
       type: "独立系",
-      category: "北海道特化・農水産DX", 
-      startupCount: 8, 
+      category: "地方創生", 
+      startupCount: 0, 
       exitCount: 0,
-      description: "北海道特化のシードVC兼スタートアップスタジオ。共同創業型投資モデルで8社創出。",
-      founded: "2020年",
-      fullDescription: "POLAR SHORTCUTは、北海道に特化したシードVC兼スタートアップスタジオです。農水産業DX、宇宙ビジネス、フードテック、メディカルなど北海道の産業特性を活かした領域で、共同創業型投資モデルにより事業企画から立ち上げまで伴走支援。2023年末時点で8社を創出しています。",
-      website: "https://corp.polarshortcut.jp/",
-      logoUrl: "/logos/polar.png"
+      description: "北海道拠点。1件500万〜1,000万円出資。インキュベイトファンド参画。",
+      founded: "2021年4月",
+      fullDescription: "POLAR SHORTCUTは、北海道に特化したシードVC兼スタートアップスタジオです。「北海道のスタートアップビジネスの推進・育成を通じて、テクノロジーで地域社会をアップデートする」をミッションに、1件あたり500万〜1,000万円を出資しています。",
+      website: "",
+      contact: "大久保徳彦"
     },
     { 
       id: 17, 
-      name: "Mistletoe", 
-      location: "東京都千代田区", 
+      name: "XTech Startup Studio", 
+      location: "東京都", 
       type: "独立系",
-      category: "社会課題解決・AI", 
-      startupCount: 200, 
+      category: "全般", 
+      startupCount: 0, 
       exitCount: 0,
-      description: "孫泰蔵氏設立。世界16カ国、200社以上のスタートアップを支援するコレクティブ・インパクト・コミュニティ。",
-      founded: "2013年",
-      fullDescription: "Mistletoeは、孫泰蔵氏が設立したコレクティブ・インパクト・コミュニティです。食糧、少子高齢化、ロジスティクスなどの社会課題解決をテーマに、AI、ロボティクス、教育、ヘルスケア領域で世界16カ国、200社以上のスタートアップを支援。複数の起業家の社会的インパクトを結集させる独自のモデルを展開しています。",
-      website: "https://mistletoe.co/",
-      logoUrl: "/logos/mistletoe.png"
+      description: "既存産業×テクノロジー。約50億円ファンド運営。",
+      founded: "2018年1月",
+      fullDescription: "XTech Startup Studioは、新規事業成功経験者が集結したスタートアップスタジオです。既存産業×テクノロジー（AI、IoT、ブロックチェーン、5G）で多発的にスタートアップを創出。M&A BASE、Radiotalk、クロスマート、イークラウド等を輩出しています。",
+      website: "https://xtech-corp.co.jp/",
+      contact: "西條晋一"
     },
     { 
       id: 18, 
-      name: "BLUEPRINT Founders", 
+      name: "BLUEPRINT", 
       location: "東京都港区", 
       type: "独立系",
-      category: "DX・バーティカルSaaS", 
-      startupCount: 4, 
-      exitCount: 2,
-      description: "「起業を標準化させる」をミッションに17.8億円調達。2社の株式売却実績あり。",
-      founded: "2021年",
-      fullDescription: "BLUEPRINT Foundersは、「起業を標準化させる」をミッションにDX・バーティカルSaaSに特化したスタートアップスタジオです。2022年に17.8億円を調達し、Archi Village、Fact Baseなど4社以上を創出。建材業界、製造業図面管理などの領域で、100社上場を目指しています。2社の株式売却実績あり。",
+      category: "SaaS", 
+      startupCount: 0, 
+      exitCount: 0,
+      description: "Vertical SaaS特化。2022年11月17.8億円調達。",
+      founded: "2022年2月",
+      fullDescription: "BLUEPRINT Foundersは、「起業を標準化させる」をミッションにDX・バーティカルSaaSに特化したスタートアップスタジオです。2022年に17.8億円を調達し、製造業・建設業向けのSaaS企業を連続的に立ち上げています。",
       website: "https://blueprint-holdings.net/",
-      logoUrl: "/logos/blueprint.png"
+      contact: "石井大智"
     },
     { 
       id: 19, 
-      name: "Algomatic", 
-      location: "東京都港区", 
-      type: "大企業系",
-      category: "生成AI", 
-      startupCount: 0, 
+      name: "Mistletoe", 
+      location: "東京都千代田区", 
+      type: "独立系",
+      category: "全般", 
+      startupCount: 170, 
       exitCount: 0,
-      description: "DMM.comから20億円投資。カンパニー制で生成AI事業を同時多発的に立ち上げ。",
-      founded: "2023年",
-      fullDescription: "Algomaticは、DMM.comから20億円の投資を受けて設立された生成AI特化型スタートアップスタジオです。「AI革命で人々を幸せにする」をミッションに、カンパニー制で同時多発的にLLM・AIエージェント関連の事業を立ち上げています。",
-      website: "https://algomatic.jp/",
-      logoUrl: "/logos/algomatic.png"
+      description: "孫泰蔵氏設立。世界15ヶ国170以上のスタートアップを支援。",
+      founded: "2013年",
+      fullDescription: "Mistletoeは、孫泰蔵氏が設立したコレクティブ・インパクト・コミュニティです。食糧、少子高齢化、ロジスティクスなどの社会課題解決をテーマに、世界15ヶ国、170以上のスタートアップを支援。共同創業型の独自モデルを展開しています。",
+      website: "https://mistletoe.co/",
+      contact: "孫泰蔵"
     }
   ];
 
-  // スタートアップデータ（リサーチ結果を反映）
+  // スタートアップデータ（サンプル）
   const startups = [
     { 
       id: 1, 
@@ -362,9 +353,8 @@ const App = () => {
       url: "https://timee.co.jp/",
       founded: "2017年",
       description: "スキマバイトマッチングサービス。ワーカー数1,000万人突破。",
-      fullDescription: "タイミーは、スキマ時間で働けるバイトマッチングサービスを提供するスタートアップです。2024年7月に東証グロースに上場し、IPO時時価総額は約1,760億円。累計調達額は約403億円で、ワーカー数は1,000万人を突破しています。Gaiaxのシード投資先から大きく成長した代表的な成功事例です。",
-      logoUrl: "/logos/timee.png",
-      timeToSeriesA: "ヒアリング予定"
+      fullDescription: "タイミーは、スキマ時間で働けるバイトマッチングサービスを提供するスタートアップです。2024年7月に東証グロースに上場し、IPO時時価総額は約1,760億円。",
+      timeToSeriesA: ""
     },
     { 
       id: 2, 
@@ -378,9 +368,8 @@ const App = () => {
       url: "https://photosynth.co.jp/",
       founded: "2014年",
       description: "IoTスマートロック「Akerun」を開発・提供。",
-      fullDescription: "Photosynthは、IoTスマートロック「Akerun」を開発・提供するスタートアップです。2021年に東証グロースに上場。オフィスや施設のセキュリティ・入退室管理をスマート化し、数千社以上に導入されています。Gaiax投資先から成長した成功事例の一つです。",
-      logoUrl: "/logos/photosynth.png",
-      timeToSeriesA: "ヒアリング予定"
+      fullDescription: "Photosynthは、IoTスマートロック「Akerun」を開発・提供するスタートアップです。2021年に東証グロースに上場。",
+      timeToSeriesA: ""
     },
     { 
       id: 3, 
@@ -393,10 +382,9 @@ const App = () => {
       exitStatus: "未", 
       url: "https://trustdock.io/",
       founded: "2017年",
-      description: "eKYC・本人確認SaaSを提供。犯罪収益移転防止法に対応。",
-      fullDescription: "TRUSTDOCKは、オンラインでの本人確認（eKYC）サービスを提供するスタートアップです。金融機関やシェアリングエコノミー事業者向けに、APIベースの本人確認ソリューションを展開。犯罪収益移転防止法に対応した安全・安心な本人確認を実現。累計調達額は13億円以上です。",
-      logoUrl: "/logos/trustdock.png",
-      timeToSeriesA: "ヒアリング予定"
+      description: "eKYC・本人確認SaaSを提供。",
+      fullDescription: "TRUSTDOCKは、オンラインでの本人確認（eKYC）サービスを提供するスタートアップです。金融機関やシェアリングエコノミー事業者向けに展開。",
+      timeToSeriesA: ""
     },
     { 
       id: 4, 
@@ -409,10 +397,9 @@ const App = () => {
       exitStatus: "未", 
       url: "https://address.love/",
       founded: "2018年",
-      description: "月額制の多拠点居住サービスを提供。空き家問題解決と新ライフスタイル提案。",
-      fullDescription: "ADDRESSは、月額制で全国の拠点に住み放題になる多拠点居住サービスを提供しています。空き家問題の解決と新しいライフスタイルの提案を両立し、地方創生にも貢献。Gaiax投資先として成長を続けています。",
-      logoUrl: "/logos/address.png",
-      timeToSeriesA: "ヒアリング予定"
+      description: "月額制の多拠点居住サービスを提供。",
+      fullDescription: "ADDRESSは、月額制で全国の拠点に住み放題になる多拠点居住サービスを提供しています。空き家問題の解決と新しいライフスタイルの提案を両立。",
+      timeToSeriesA: ""
     },
     { 
       id: 5, 
@@ -426,89 +413,8 @@ const App = () => {
       url: "https://www.adish.co.jp/",
       founded: "2014年",
       description: "SNSモニタリング・カスタマーサクセスサービスを提供。",
-      fullDescription: "adishは、SNSモニタリングやカスタマーサクセスサービスを提供するスタートアップです。2020年に東証グロースに上場。Gaiaxからカーブアウトして独立し、企業のSNS運用やカスタマーサポートを支援しています。",
-      logoUrl: "/logos/adish.png",
-      timeToSeriesA: "ヒアリング予定"
-    },
-    { 
-      id: 6, 
-      name: "WOTA", 
-      studio: "quantum", 
-      studioId: 2,
-      industry: "クリーンテック", 
-      stage: "シリーズB以降", 
-      funding: "数十億円", 
-      exitStatus: "未", 
-      url: "https://wota.co.jp/",
-      founded: "2014年",
-      description: "水循環技術で世界の水問題解決を目指すディープテックスタートアップ。",
-      fullDescription: "WOTAは、独自の水循環技術で世界の水問題解決を目指すディープテックスタートアップです。災害時の水供給や、水インフラのない地域での水利用を可能にする製品を開発。quantumの投資先として成長を続けています。",
-      logoUrl: "/logos/wota.png",
-      timeToSeriesA: "ヒアリング予定"
-    },
-    { 
-      id: 7, 
-      name: "クロスマート", 
-      studio: "XTech", 
-      studioId: 9,
-      industry: "フードテック", 
-      stage: "シリーズA+", 
-      funding: "数億円", 
-      exitStatus: "未", 
-      url: "https://xmart.co.jp/",
-      founded: "2018年",
-      description: "飲食店向け仕入れ最適化サービスを提供。",
-      fullDescription: "クロスマートは、飲食店向けの仕入れ最適化サービスを提供するスタートアップです。XTechが設立し、飲食業界のDXを推進。食材の仕入れコスト削減と業務効率化を支援しています。",
-      logoUrl: "/logos/crossmart.png",
-      timeToSeriesA: "ヒアリング予定"
-    },
-    { 
-      id: 8, 
-      name: "ZENKIGEN（HARUTAKA）", 
-      studio: "Sun Asterisk", 
-      studioId: 3,
-      industry: "HR Tech", 
-      stage: "シリーズB以降", 
-      funding: "N/A", 
-      exitStatus: "未", 
-      url: "https://zenkigen.co.jp/",
-      founded: "N/A",
-      description: "WEB面接プラットフォーム「HARUTAKA」を提供。",
-      fullDescription: "ZENKIGENは、WEB面接プラットフォーム「HARUTAKA」を提供するHR Techスタートアップです。Sun Asteriskの支援を受けて成長し、採用のDXを推進。AIを活用した面接支援機能も提供しています。",
-      logoUrl: "/logos/zenkigen.png",
-      timeToSeriesA: "ヒアリング予定"
-    },
-    { 
-      id: 9, 
-      name: "FAVER", 
-      studio: "Studio ENTRE", 
-      studioId: 5,
-      industry: "エンタメ", 
-      stage: "シード", 
-      funding: "N/A", 
-      exitStatus: "未", 
-      url: "#",
-      founded: "N/A",
-      description: "ライブ動画配信サービスを提供。",
-      fullDescription: "FAVERは、ライブ動画配信サービスを提供するエンタメスタートアップです。Studio ENTREが創出し、エンターテインメント業界のイノベーションを推進しています。",
-      logoUrl: "/logos/faver.png",
-      timeToSeriesA: "ヒアリング予定"
-    },
-    { 
-      id: 10, 
-      name: ".mura", 
-      studio: "Studio ENTRE", 
-      studioId: 5,
-      industry: "Web3", 
-      stage: "シード", 
-      funding: "N/A", 
-      exitStatus: "未", 
-      url: "#",
-      founded: "N/A",
-      description: "音楽NFTマーケットプレイスを提供。",
-      fullDescription: ".muraは、音楽NFTマーケットプレイスを提供するWeb3スタートアップです。Studio ENTREが創出し、アーティストとファンをつなぐ新しいプラットフォームを構築しています。",
-      logoUrl: "/logos/mura.png",
-      timeToSeriesA: "ヒアリング予定"
+      fullDescription: "adishは、SNSモニタリングやカスタマーサクセスサービスを提供するスタートアップです。2020年に東証グロースに上場。",
+      timeToSeriesA: ""
     }
   ];
 
@@ -518,25 +424,15 @@ const App = () => {
     { title: "スタジオ発スタートアップ 成功率分析", date: "2024.11", type: "分析レポート", size: "PDF" },
   ];
 
-  // イベント参加者タイプ
   const eventParticipants = [
     { type: "シーズ側", description: "アイデアを持つ個人（事業会社社員、起業志望者など）" },
     { type: "支援側", description: "VC、スタートアップスタジオ、エンジェル投資家など" }
   ];
 
-  // イベント形式
   const eventFormat = [
     { label: "形式", value: "オンライン（Zoom）" },
     { label: "1ミーティング", value: "20〜30分" },
     { label: "1人あたり", value: "5〜6枠程度" }
-  ];
-
-  // 集客先団体
-  const recruitmentOrgs = [
-    { name: "ONE JAPAN", description: "55社3,000名、大企業有志団体の連合体" },
-    { name: "One Panasonic", description: "約3,000人、ONE JAPANの母体" },
-    { name: "O-DEN（NTT）", description: "グループ横断の若手ネットワーク" },
-    { name: "Intrastar", description: "1,000名以上、社内起業家コミュニティ" },
   ];
 
   const filteredStudios = featuredStudios.filter(s => studioTypeFilter === 'すべて' || s.type === studioTypeFilter);
@@ -549,7 +445,6 @@ const App = () => {
   const currentTimeline = timelineRegion === 'global' ? timelineDataGlobal : timelineDataJapan;
   const maxStudios = Math.max(...currentTimeline.map(d => d.studios));
 
-  // --- Components ---
   const Tag = ({ children, color = "blue" }) => {
     const colors = {
       blue: "bg-blue-500/10 text-blue-400 border-blue-500/20",
@@ -606,7 +501,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-gray-200 font-sans selection:bg-blue-500/30 tracking-tight overflow-x-hidden">
-      {/* 1. Navigation */}
+      {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || viewMode !== 'top' ? 'bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5 py-3 md:py-4' : 'bg-transparent py-6 md:py-8'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => {setViewMode('top'); window.scrollTo(0,0)}}>
@@ -644,16 +539,14 @@ const App = () => {
 
       {viewMode === 'top' && (
         <>
-          {/* Hero Section - 8項目マトリクス */}
+          {/* Hero Section */}
           <section className="relative pt-20 sm:pt-24 md:pt-28 pb-10 sm:pb-12 md:pb-16 overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] md:h-[600px] bg-blue-500/10 blur-[80px] md:blur-[120px] rounded-full pointer-events-none"></div>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-              {/* Tag */}
               <div className="text-center mb-2 md:mb-3">
                 <Tag color="green">DATA-DRIVEN INSIGHTS</Tag>
               </div>
               
-              {/* Main Headline */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-center mb-2 md:mb-3 leading-tight tracking-tighter text-white">
                 スタートアップスタジオの<br />
                 <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">
@@ -665,20 +558,16 @@ const App = () => {
                 データが証明する、スタジオモデルの優位性
               </p>
 
-              {/* ★ 8項目マトリクス（タイトルなし・色分けのみ） */}
-              
-              {/* Row 1: 青（3列） */}
+              {/* 8項目マトリクス */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-2 sm:mb-3">
-                {/* 1. スタジオ数 */}
                 <div className="bg-[#12121a] border border-blue-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-blue-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
-                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">45</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">19</span>
                     <span className="text-sm sm:text-base md:text-lg font-bold text-blue-400">社</span>
                   </div>
-                  <p className="text-[10px] sm:text-xs font-bold text-gray-400">スタジオ数</p>
+                  <p className="text-[10px] sm:text-xs font-bold text-gray-400">掲載スタジオ数</p>
                 </div>
 
-                {/* 2. スタジオ発スタートアップ数 */}
                 <div className="bg-[#12121a] border border-blue-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-blue-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">200</span>
@@ -687,7 +576,6 @@ const App = () => {
                   <p className="text-[10px] sm:text-xs font-bold text-gray-400">輩出スタートアップ</p>
                 </div>
 
-                {/* 3. 投資運用額 */}
                 <div className="bg-[#12121a] border border-blue-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-blue-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">700</span>
@@ -697,9 +585,7 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Row 2: 緑（3列） */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-2 sm:mb-3">
-                {/* 4. 初回調達までの期間 */}
                 <div className="bg-[#12121a] border border-green-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-green-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">18</span>
@@ -708,7 +594,6 @@ const App = () => {
                   <p className="text-[10px] sm:text-xs font-bold text-gray-400">初回調達まで</p>
                 </div>
 
-                {/* 5. 調達金額（初回） */}
                 <div className="bg-[#12121a] border border-green-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-green-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">1.5</span>
@@ -717,7 +602,6 @@ const App = () => {
                   <p className="text-[10px] sm:text-xs font-bold text-gray-400">初回調達額</p>
                 </div>
 
-                {/* 6. 時価総額（初回調達時） */}
                 <div className="bg-[#12121a] border border-green-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-green-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">10</span>
@@ -727,9 +611,7 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Row 3: 紫（2列・中央寄せ） */}
               <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto mb-8 md:mb-10">
-                {/* 7. 調達総額 */}
                 <div className="bg-[#12121a] border border-purple-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-purple-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">500</span>
@@ -738,7 +620,6 @@ const App = () => {
                   <p className="text-[10px] sm:text-xs font-bold text-gray-400">調達総額</p>
                 </div>
 
-                {/* 8. 総時価総額 */}
                 <div className="bg-[#12121a] border border-purple-500/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-center hover:border-purple-400/50 transition-all hover:-translate-y-1">
                   <div className="flex items-baseline justify-center gap-0.5 sm:gap-1 mb-1 sm:mb-2">
                     <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter">3000</span>
@@ -748,7 +629,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4">
                 <button onClick={() => {setViewMode('comparison'); window.scrollTo(0,0)}} className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-sm md:text-base hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 border border-white/10 uppercase tracking-wider">
                   View Data <BarChart3 size={18} />
@@ -861,8 +741,8 @@ const App = () => {
                   <h3 className="font-black text-base sm:text-lg md:text-xl mb-2 md:mb-3 text-white group-hover:text-blue-400 transition-colors line-clamp-1 tracking-tight">{studio.name}</h3>
                   <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 md:mb-8 line-clamp-2 md:line-clamp-3">{studio.description}</p>
                   <div className="flex gap-4 md:gap-8 mt-auto pt-4 md:pt-6 border-t border-white/5">
-                    <div><p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Startups</p><p className="font-black text-white text-base md:text-lg">{studio.startupCount}</p></div>
-                    <div><p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Exits</p><p className="font-black text-emerald-400 text-base md:text-lg">{studio.exitCount}</p></div>
+                    <div><p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Startups</p><p className="font-black text-white text-base md:text-lg">{studio.startupCount || '-'}</p></div>
+                    <div><p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Exits</p><p className="font-black text-emerald-400 text-base md:text-lg">{studio.exitCount || '-'}</p></div>
                   </div>
                 </div>
               )}
@@ -900,7 +780,7 @@ const App = () => {
               )}
             />
 
-            {/* Reports & Insights */}
+            {/* Reports */}
             <div className="py-12 md:py-24">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-12">
                 <div>
@@ -934,14 +814,12 @@ const App = () => {
         </>
       )}
 
-      {/* Event Page - 新規追加 */}
+      {/* Event Page */}
       {viewMode === 'event' && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
-          {/* Hero */}
           <div className="text-center mb-12 md:mb-20">
             <div className="inline-flex items-center gap-2 mb-4">
               <Tag color="orange">MATCHING EVENT</Tag>
-              <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">IVSイベント参考</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-4">
               シーズ<br/>
@@ -952,40 +830,16 @@ const App = () => {
             </p>
           </div>
 
-          {/* 概要 */}
           <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
             <h2 className="text-xl md:text-2xl font-black text-white mb-6 flex items-center gap-3">
               <div className="w-1 h-6 bg-orange-500 rounded-full"></div>
               イベント概要
             </h2>
             <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-              アイデア/シーズを持つ個人と、投資・事業伴走したいVC/スタートアップスタジオをマッチングするオンラインイベント。事前にマッチングを行い、当日は短時間ミーティングを集中的に実施します。
+              アイデア/シーズを持つ個人と、投資・事業伴走したいVC/スタートアップスタジオをマッチングするオンラインイベント。
             </p>
           </div>
 
-          {/* コンセプト */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
-            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
-              <div className="w-1 h-6 bg-purple-500 rounded-full"></div>
-              コンセプト
-            </h2>
-            <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-              {[
-                { icon: Users, text: "会社内では会社事情でボツになったアイデアが実は画期的なものかも！", color: "blue" },
-                { icon: Zap, text: "「シーズを持つ人」と「支援したい人」のフラットなマッチング", color: "purple" },
-                { icon: Target, text: "効率的に多くの出会いを生むマッチング型イベント", color: "orange" },
-              ].map((item, idx) => (
-                <div key={idx} className={`bg-${item.color}-500/10 border border-${item.color}-500/20 rounded-xl p-6 text-center`}>
-                  <div className={`w-12 h-12 mx-auto mb-4 rounded-xl bg-${item.color}-500/20 flex items-center justify-center`}>
-                    <item.icon size={24} className={`text-${item.color}-400`} />
-                  </div>
-                  <p className="text-gray-300 text-sm font-medium">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 参加者 */}
           <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
             <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
               <div className="w-1 h-6 bg-green-500 rounded-full"></div>
@@ -1006,7 +860,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* 開催形式 */}
           <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
             <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
               <div className="w-1 h-6 bg-blue-500 rounded-full"></div>
@@ -1022,46 +875,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* エントリーの流れ */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-8 md:p-12 mb-8">
-            <h2 className="text-xl md:text-2xl font-black text-white mb-8 flex items-center gap-3">
-              <div className="w-1 h-6 bg-yellow-500 rounded-full"></div>
-              エントリーの流れ
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Step 1 */}
-              <div className="relative">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
-                  <div className="w-10 h-10 rounded-full bg-orange-500/20 text-orange-400 font-black flex items-center justify-center mb-4">1</div>
-                  <h3 className="font-black text-white mb-2">エントリー</h3>
-                  <p className="text-gray-400 text-sm">フォームからアイデア概要や求める支援内容を登録</p>
-                </div>
-                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600">→</div>
-              </div>
-
-              {/* Step 2 */}
-              <div className="relative">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 font-black flex items-center justify-center mb-4">2</div>
-                  <h3 className="font-black text-white mb-2">マッチング通知</h3>
-                  <p className="text-gray-400 text-sm">マッチング結果とミーティング相手をメールでお知らせ</p>
-                </div>
-                <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-600">→</div>
-              </div>
-
-              {/* Step 3 */}
-              <div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-full">
-                  <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-400 font-black flex items-center justify-center mb-4">3</div>
-                  <h3 className="font-black text-white mb-2">当日ミーティング</h3>
-                  <p className="text-gray-400 text-sm">Zoomで20〜30分のミーティングを5〜6枠実施</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA */}
           <div className="bg-gradient-to-br from-orange-500/20 via-red-500/20 to-purple-500/20 border border-orange-500/30 rounded-2xl md:rounded-3xl p-8 md:p-12 text-center">
             <p className="text-xl md:text-2xl font-bold text-white mb-8">
               アイデアをお持ちの方も、支援したい方も。
@@ -1082,12 +895,8 @@ const App = () => {
               COMPARISON<br/>
               <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">DATA</span>
             </h2>
-            <p className="text-gray-400 max-w-2xl">
-              スタートアップスタジオ発企業と従来型VC支援企業の比較データ。事実に基づく情報で「スタジオという選択肢」を検討いただけます。
-            </p>
           </div>
 
-          {/* 比較セクション */}
           <div className="mb-16 md:mb-24">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
               <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">スタジオ vs VC 比較</h3>
@@ -1108,7 +917,6 @@ const App = () => {
             </div>
 
             <div className="space-y-4">
-              {/* Header */}
               <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-3 text-[10px] font-black text-gray-500 uppercase tracking-widest">
                 <div>指標</div>
                 <div className="text-center">スタジオ発</div>
@@ -1135,7 +943,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* 時系列セクション */}
           <div className="mb-16 md:mb-24">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
               <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">スタジオ数の推移（2015-2024）</h3>
@@ -1155,7 +962,6 @@ const App = () => {
               </div>
             </div>
 
-            {/* Summary Stats */}
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
                 <p className="text-3xl md:text-4xl font-black text-purple-400">
@@ -1177,7 +983,6 @@ const App = () => {
               </div>
             </div>
 
-            {/* Chart */}
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-10">
               <div className="flex items-end justify-between gap-2 h-64">
                 {currentTimeline.map((data, idx) => (
@@ -1188,79 +993,20 @@ const App = () => {
                       style={{ height: `${(data.studios / maxStudios) * 100}%` }}
                     />
                     <div className="text-xs text-gray-500 font-medium">{data.year}</div>
-                    {data.label && (
-                      <div className="text-[8px] text-gray-400 text-center hidden md:block">{data.label}</div>
-                    )}
                   </div>
                 ))}
               </div>
             </div>
-
-            <p className="text-xs text-gray-500 text-center mt-4">
-              出典: Big Venture Studio Research 2024, Enhance Ventures, スタートアップスタジオ協会
-            </p>
           </div>
 
-          {/* CTA */}
           <div className="bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-green-500/20 border border-white/10 rounded-3xl p-8 md:p-12 text-center">
             <h3 className="text-2xl md:text-3xl font-black text-white mb-4">詳細データをダウンロード</h3>
             <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-              比較データ、時系列データ、国内スタジオ一覧、スタジオ発スタートアップの詳細をExcelでダウンロードできます。
+              比較データ、時系列データ、国内スタジオ一覧をExcelでダウンロードできます。
             </p>
             <button className="bg-white text-black px-8 py-4 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-gray-100 transition-colors inline-flex items-center gap-2">
               <Download size={18} /> Download Excel
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* Hearing Items Page */}
-      {viewMode === 'hearing' && (
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-20 md:pb-32">
-          <div className="mb-12 md:mb-16">
-            <p className="text-[10px] font-black text-yellow-400 uppercase tracking-[0.4em] mb-2">データ収集</p>
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-6">
-              HEARING<br/>
-              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">ITEMS</span>
-            </h2>
-            <p className="text-gray-400 max-w-2xl">
-              各スタジオへのヒアリングで収集予定のデータ項目です。これにより「シリーズA到達期間」などの国内実データを取得します。
-            </p>
-          </div>
-
-          <div className="space-y-6 mb-12">
-            {hearingItems.map((category, idx) => (
-              <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <h3 className="text-lg font-black text-blue-400 mb-6 flex items-center gap-3">
-                  <ClipboardList size={20} />
-                  {category.category}
-                </h3>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {category.items.map((item, itemIdx) => (
-                    <div key={itemIdx} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-                      <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-black flex items-center justify-center">
-                        {itemIdx + 1}
-                      </span>
-                      <span className="text-sm text-gray-300">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-white/10 rounded-2xl p-6 md:p-8">
-            <h3 className="font-black text-white mb-4 flex items-center gap-2">
-              <Target size={20} className="text-yellow-400" />
-              これで出せるアウトプット
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2"><span className="text-green-400">✓</span> シリーズA到達までの平均期間（スタジオ発 vs VC支援）</li>
-              <li className="flex items-center gap-2"><span className="text-green-400">✓</span> 年別の輩出スタートアップ数の推移</li>
-              <li className="flex items-center gap-2"><span className="text-green-400">✓</span> 年別のスタジオ発調達額の推移</li>
-              <li className="flex items-center gap-2"><span className="text-green-400">✓</span> 年別のExit件数の推移</li>
-              <li className="flex items-center gap-2"><span className="text-green-400">✓</span> 領域別・シリーズ別の内訳</li>
-            </ul>
           </div>
         </div>
       )}
@@ -1306,15 +1052,15 @@ const App = () => {
                 <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8 md:mb-10 mt-auto">
                   <div className="bg-white/5 p-4 md:p-5 rounded-xl md:rounded-3xl border border-white/5 text-center">
                     <p className="text-[8px] md:text-[10px] font-black text-gray-500 uppercase mb-2 tracking-[0.2em]">Startups</p>
-                    <p className="text-lg md:text-2xl font-black text-white">{studio.startupCount}</p>
+                    <p className="text-lg md:text-2xl font-black text-white">{studio.startupCount || '-'}</p>
                   </div>
                   <div className="bg-white/5 p-4 md:p-5 rounded-xl md:rounded-3xl border border-white/5 text-center">
                     <p className="text-[8px] md:text-[10px] font-black text-gray-500 uppercase mb-2 tracking-[0.2em]">Exits</p>
-                    <p className="text-lg md:text-2xl font-black text-emerald-400">{studio.exitCount}</p>
+                    <p className="text-lg md:text-2xl font-black text-emerald-400">{studio.exitCount || '-'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-gray-500 text-[10px] font-black uppercase tracking-widest mt-auto">
-                  <MapPin size={14} className="text-blue-500" /> {studio.location}
+                  <MapPin size={14} className="text-blue-500" /> {studio.location || '未設定'}
                 </div>
               </div>
             ))}
@@ -1338,7 +1084,7 @@ const App = () => {
                 <div className="flex-1 space-y-4">
                   <p className="text-[9px] md:text-[11px] font-black text-gray-500 uppercase tracking-[0.3em]">Industry</p>
                   <div className="flex flex-wrap gap-2">
-                    {['すべて', 'SaaS', 'HR Tech', 'IoT', 'フードテック', 'シェアリング', 'Web3', 'エンタメ'].map(i => (
+                    {['すべて', 'SaaS', 'HR Tech', 'IoT', 'シェアリング'].map(i => (
                       <button key={i} onClick={() => setStartupIndustryFilter(i)} className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-all ${startupIndustryFilter === i ? 'bg-purple-600 border-purple-600 text-white' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}`}>{i}</button>
                     ))}
                   </div>
@@ -1372,26 +1118,9 @@ const App = () => {
                       <span className="text-gray-500 font-black uppercase tracking-widest flex items-center gap-2"><DollarSign size={14} className="text-yellow-400"/> Funding</span>
                       <span className="font-black text-white text-sm md:text-lg">{startup.funding}</span>
                     </div>
-                    {startup.timeToSeriesA && (
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="text-gray-500 font-black uppercase tracking-widest flex items-center gap-2"><Clock size={14} className="text-blue-400"/> Series A期間</span>
-                        <span className={`font-bold ${startup.timeToSeriesA === 'ヒアリング予定' ? 'text-yellow-400' : 'text-white'}`}>{startup.timeToSeriesA}</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* ヒアリング予定の注記 */}
-            <div className="mt-12 p-6 rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
-              <h3 className="font-black text-yellow-400 mb-2 flex items-center gap-2">
-                <ClipboardList size={18} /> データ収集中
-              </h3>
-              <p className="text-sm text-gray-400">
-                シリーズA到達期間などの詳細データは、各スタジオへのヒアリングを通じて収集予定です。
-                <button onClick={() => {setViewMode('hearing'); window.scrollTo(0,0)}} className="text-yellow-400 underline ml-2">ヒアリング項目を見る →</button>
-              </p>
             </div>
           </div>
         </div>
@@ -1420,7 +1149,7 @@ const App = () => {
                 </div>
                 <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tighter">{selectedStudio.name}</h1>
                 <p className="text-gray-400 flex items-center gap-2 text-sm md:text-base font-medium">
-                  <MapPin size={18} className="text-blue-400" /> {selectedStudio.location}
+                  <MapPin size={18} className="text-blue-400" /> {selectedStudio.location || '未設定'}
                   <span className="text-gray-700 mx-2">•</span>
                   設立 {selectedStudio.founded}
                 </p>
@@ -1429,17 +1158,22 @@ const App = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: "Startups", value: selectedStudio.startupCount, color: "text-white" },
-              { label: "Exits", value: selectedStudio.exitCount, color: "text-emerald-400" },
-              { label: "Type", value: selectedStudio.type, color: "text-blue-400", isText: true },
-              { label: "Founded", value: selectedStudio.founded, color: "text-purple-400", isText: true },
-            ].map((box, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
-                <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">{box.label}</p>
-                <p className={`font-black ${box.isText ? 'text-lg' : 'text-3xl'} ${box.color}`}>{box.value}</p>
-              </div>
-            ))}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Startups</p>
+              <p className="font-black text-3xl text-white">{selectedStudio.startupCount || '-'}</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Exits</p>
+              <p className="font-black text-3xl text-emerald-400">{selectedStudio.exitCount || '-'}</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Type</p>
+              <p className="font-black text-lg text-blue-400">{selectedStudio.type}</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
+              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Contact</p>
+              <p className="font-black text-lg text-purple-400">{selectedStudio.contact || '-'}</p>
+            </div>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 mb-8">
@@ -1447,7 +1181,7 @@ const App = () => {
               <div className="w-1 h-6 bg-blue-500 rounded-full"></div> About
             </h2>
             <p className="text-gray-300 leading-relaxed text-base md:text-lg font-medium">{selectedStudio.fullDescription}</p>
-            {selectedStudio.website !== "#" && (
+            {selectedStudio.website && (
               <a href={selectedStudio.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-blue-400 hover:text-blue-300 font-black text-sm uppercase tracking-widest border-b border-blue-400/30 pb-1">
                 Official Website <ExternalLink size={14} />
               </a>
@@ -1501,7 +1235,6 @@ const App = () => {
                 <div className="flex flex-wrap gap-2 mb-4">
                   <Tag color="purple">{selectedStartup.industry}</Tag>
                   <Tag color={selectedStartup.exitStatus.includes('IPO') ? 'green' : 'yellow'}>{selectedStartup.stage}</Tag>
-                  {selectedStartup.exitStatus.includes('IPO') && <Tag color="green">IPO済</Tag>}
                 </div>
                 <h1 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tighter">{selectedStartup.name}</h1>
                 <p className="text-gray-400 text-sm md:text-base font-medium">
@@ -1514,14 +1247,12 @@ const App = () => {
                   >
                     {selectedStartup.studio}
                   </span> から輩出
-                  <span className="text-gray-700 mx-2">•</span>
-                  設立 {selectedStartup.founded}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
               <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Funding</p>
               <p className="text-xl md:text-2xl font-black text-blue-400">{selectedStartup.funding}</p>
@@ -1532,15 +1263,11 @@ const App = () => {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
               <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Exit Status</p>
-              <p className={`text-lg font-black ${selectedStartup.exitStatus.includes('IPO') || selectedStartup.exitStatus.includes('M&A') ? 'text-emerald-400' : 'text-gray-600'}`}>{selectedStartup.exitStatus}</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/[0.08] transition-colors">
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Series A期間</p>
-              <p className={`text-lg font-black ${selectedStartup.timeToSeriesA === 'ヒアリング予定' ? 'text-yellow-400' : 'text-white'}`}>{selectedStartup.timeToSeriesA || 'N/A'}</p>
+              <p className={`text-lg font-black ${selectedStartup.exitStatus.includes('IPO') ? 'text-emerald-400' : 'text-gray-600'}`}>{selectedStartup.exitStatus}</p>
             </div>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 mb-8">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10">
             <h2 className="text-xl md:text-2xl font-black text-white mb-6 tracking-tight flex items-center gap-3">
               <div className="w-1 h-6 bg-purple-500 rounded-full"></div> About
             </h2>
@@ -1550,32 +1277,6 @@ const App = () => {
                 Official Website <ExternalLink size={14} />
               </a>
             )}
-          </div>
-
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10">
-            <h2 className="text-xl md:text-2xl font-black text-white mb-8 tracking-tight flex items-center gap-3">
-              <div className="w-1 h-6 bg-blue-500 rounded-full"></div> 出身スタジオ
-            </h2>
-            {(() => {
-              const studio = featuredStudios.find(s => s.id === selectedStartup.studioId);
-              return studio ? (
-                <div 
-                  onClick={() => { setSelectedStudio(studio); setViewMode('studioDetail'); window.scrollTo(0,0) }}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-blue-500/50 hover:bg-white/[0.08] cursor-pointer transition-all flex items-center gap-6 group"
-                >
-                  <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center font-black text-white text-2xl md:text-3xl shadow-lg">
-                    {studio.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h3 className="font-black text-white text-lg md:text-xl mb-2 group-hover:text-blue-400 transition-colors tracking-tight">{studio.name}</h3>
-                    <p className="text-gray-500 text-xs md:text-sm font-medium line-clamp-1">{studio.description}</p>
-                  </div>
-                  <ChevronRight size={20} className="ml-auto text-gray-700 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
-                </div>
-              ) : (
-                <p className="text-gray-500 text-sm italic">スタジオ情報が見つかりません。</p>
-              );
-            })()}
           </div>
         </div>
       )}
@@ -1600,7 +1301,6 @@ const App = () => {
           </div>
           <div className="pt-8 md:pt-12 mt-12 md:mt-20 border-t border-white/5 text-center">
             <p className="text-[8px] md:text-[10px] font-black text-gray-600 uppercase tracking-[0.3em] md:tracking-[0.5em]">© 2025 STARTUP STUDIO ASSOCIATION / ALL RIGHTS RESERVED.</p>
-            <p className="text-[8px] text-gray-700 mt-2">データ出典: GSSN, Big Venture Studio Research 2024, INITIAL, 各社公式サイト</p>
           </div>
         </div>
       </footer>
@@ -1610,14 +1310,11 @@ const App = () => {
         body { font-family: 'Inter', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .animate-in {
-          animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        .animate-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
       `}} />
     </div>
   );
